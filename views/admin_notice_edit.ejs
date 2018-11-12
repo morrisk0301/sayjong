@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+	<title>공지사항 수정</title>
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+
+	<style>
+		body        { padding-top:80px; }
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<form action="admin_notice_edit" method="post">
+			<label>공지사항 제목</label><br>
+			<input type="text" size=90 name="notice_head" value="<%=notice.notice_head%>"/><br><br>
+			<label>공지사항 내용</label><br>
+			<textarea name="notice_body" cols="100" rows="20"><%=notice.notice_body%></textarea><br><br>
+			<input type="hidden" name="notice_id" value="<%=notice.notice_id%>"/>
+			<input type="submit" value="공지사항 수정"/>
+			</form>
+		<br><br><br>
+	</div>
+</div>
+</body>
+</html>

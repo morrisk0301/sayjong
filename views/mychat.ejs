@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>내 채팅방</title>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script>
+        var host = "localhost";
+        var port = "3000";
+        var socket;
+
+        // 문서 로딩 후 실행됨
+        $(function() {
+
+            var options = {'forceNew':true};
+            var url = 'http://' + host + ':' + port;
+            socket = io.connect(url, options);
+            socket.on('connect', function() {
+                println('웹소켓 서버에 연결되었습니다. : ' + url);
+                socket.emit('storeClientID', <%=user.user_id%>);
+            });
+
+            var output = {id:"<%=user.email%>"};
+
+            console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
+            if (socket == undefined) {
+                alert('서버에 연결되어 있지 않습니다. 먼저 서버에 연결하세요.');
+                return;
+            }
+            socket.emit('login', output);
+            socket.emit('initroom', <%=user.user_id%>);
+
+            socket.on('disconnect', function() {
+                println('웹소켓 연결이 종료되었습니다.');
+            });
+
+        });
+        function println(data) {
+            console.log(data);
+            $('#result').append('<p>' + data + '</p>');
+        }
+    </script>
+</head>
+<body>
+<h3>내 채팅방</h3>
+<br>
+<div>
+    <h3>방 리스트</h3>
+    <%for(var i=0;i<chat.length;i++){%>
+    <span>방 ID: <a><%=chat[i].thread_id%></a></span>
+    <span>방 이름: <a><%=chat[i].thread_name%></a></span>
+    <span>방장 : <a><%=chat[i].thread_superuser_id%></a></span>
+    <span>폭파시간 : <a><%=chat[i].thread_time%></a></span>
+    <span>최대인원 : <a><%=chat[i].thread_n_people%></a></span>
+    <span>공개여부 : <a><%=chat[i].is_open%></a></span>
+    <br>
+    <%}%>
+</div>
+<br>
+<hr/>
+
+</body>
+</html>

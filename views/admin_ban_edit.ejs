@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+	<title>신고 처리</title>
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+
+	<style>
+		body        { padding-top:80px; }
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<form action="/admin_ban_edit" method="post">
+			<label>신고자 이메일</label><br>
+			<input type="email" name="shingo_email" value="<%=ban.shingo_email%>" size="50" disabled/><br><br>
+			<label>신고 닉네임</label><br>
+			<input type="text" name="nickname" value="<%=ban.ban_nickname%>" size="50" disabled/><br><br>
+			<label>신고 채팅방 ID</label><br>
+			<input type="number" name="ban_thread_id" value="<%=ban.ban_thread_id%>" size="50" disabled/><br><br>
+			<label>신고 사유</label><br>
+			<input type="number" name="ban_reason" value="<%=ban.ban_reason%>" size="50" disabled/><br><br>
+			<label>신고 내용</label><br>
+			<textarea name="ban_body" cols="100" rows="10" disabled><%=ban.ban_body%></textarea><br><br>
+			<label>스크린 샷</label><br>
+			<image src="<%=ban.ban_img%>"></image><br><br>
+			<%if(ban.ban_email){%>
+			<label>정지 유저 이메일</label><br>
+			<input type="text" name="ban_email" size="50" value="<%=ban.ban_email%>" disabled/><br><br>
+			<label>신고 처리 결과</label><br>
+			<select name="ban_result" disabled>
+				<option><%=ban.ban_result%></option>
+			</select><br><br>
+			<label>정지 일수</label><a>신고 결과 정지하기로 할 경우에만 입력</a><br>
+			<select name="ban_days" disabled>
+				<option><%=ban.ban_days==36500?'영구':ban.ban_days%></option>
+			</select><br><br>
+			<label>관리자 피드백</label><a>신고 관련 관리자 기록용</a><br>
+			<textarea name="ban_feedback" cols="100" rows="10" disabled><%=ban.ban_feedback%></textarea><br>
+			<a href="/admin_ban_reset?user_ban_id=<%=ban.user_ban_id%>&ban_id=<%=ban.ban_id%>" id="ban_reset">내용 초기화</a><br><br>
+			<%} else{%>
+			<label>정지 유저 이메일</label><br>
+			<input type="text" name="ban_email" size="50"/><br><br>
+			<label>신고 처리 결과</label><br>
+			<select name="ban_result">
+				<option>정지</option>
+				<option>무혐의</option>
+			</select><br><br>
+			<label>정지 일수</label><a>신고 결과 정지하기로 할 경우에만 입력</a><br>
+			<select name="ban_days">
+				<option>1</option>
+				<option>3</option>
+				<option>5</option>
+				<option>7</option>
+				<option>10</option>
+				<option>영구</option>
+			</select><br><br>
+			<label>관리자 피드백</label><a>신고 관련 관리자 기록용</a><br>
+			<textarea name="ban_feedback" cols="100" rows="10"></textarea><br><br>
+			<input type="hidden" name="ban_id" value="<%=ban.ban_id%>"/>
+			<input type="submit" value="처리하기"/>
+			<%}%>
+		</form>
+		<br><br><br>
+	</div>
+</div>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+    $("#ban_reset").on('click', function(event){
+        var result = confirm('정말 초기화 하시겠습니까?');
+        if(result) return true;
+        else return false;
+    })
+</script>
+</body>
+</html>

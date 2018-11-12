@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+	<title>비밀번호 초기환</title>
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+
+	<style>
+		body        { padding-top:80px; }
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div>
+			<h2>
+				회원 비밀번호 초기화
+			</h2>
+			<p>회원 아이디를 입력한 후 초기화 버튼을 누르면 임의 8자리 비밀번호로 초기화 됩니다.</p>
+			<br><br>
+			<form action="/admin_pwreset" method="post" id="form_reset">
+				<label>회원 이메일</label>
+				<input type="text" name="email"/>
+				<input type="submit" value="초기화"/>
+			</form>
+			<br><br>
+			<%if(resetPW){%>
+			<h3>초기화 완료!</h3><br>
+			<h3>초기화된 비밀번호는: <%=resetPW%>입니다</h3>
+			<%}%>
+			<br><a href="/">관리자 홈으로</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+	$("#form_reset").on('submit', function(event){
+        var result = confirm('정말 초기화 하시겠습니까?');
+        if(result) return true;
+        else return false;
+	})
+</script>
+</body>
+</html>

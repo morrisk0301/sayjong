@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>전체 채팅방</title>
+
+    <script src="jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<h2>전체 채팅방</h2>
+<br>
+<div id="roomList">
+</div>
+<br>
+<div>
+    <h3>방 리스트</h3>
+    <%for(var i=0;i<chat.length;i++){%>
+    <span><img src="<%=chat[i].thread_img%>"/></span>
+    <span>방 ID: <a><%=chat[i].thread_id%></a></span>
+    <span>방 이름: <a><%=chat[i].thread_name%></a></span>
+    <span>방장 : <a><%=chat[i].thread_superuser_id%></a></span>
+    <span>폭파시간 : <a><%=chat[i].thread_time%></a></span>
+    <span>최대인원 : <a><%=chat[i].thread_n_people%></a></span>
+    <span>공개여부 : <a><%=chat[i].is_open%></a></span>
+    <br>
+    <%}%>
+</div>
+<br>
+<div>
+    <form method="post" action="/jointhread">
+        <div><span>방 아이디 :</span> <input type="text" name="roomID"/></div>
+        <div><span>방 비밀번호 :</span> <input type="password" name="roomPW"/></div>
+        <input type="submit" id="joinRoomButton" value="방입장하기" />
+    </form>
+</div>
+<div>
+    <form method="post" action="/leavethread">
+        <div><span>방 아이디 :</span> <input type="text" name="roomID"/></div>
+        <input type="submit" id="leaveRoomButton" value="방퇴장하기" />
+    </form>
+</div>
+<br>
+<hr/>
+
+</body>
+</html>

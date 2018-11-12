@@ -1,0 +1,67 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('sayjong:server');
+var http = require('http');
+var socket = require('../socketio/socket');
+
+var config = require('../config/config');
+var database = require('../database/database');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '9948');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+process.on('uncaughtException', function (err) {
+    console.log('uncaughtException 발생함 : ' + err);
+    console.log('서버 프로세스 종료하지 않고 유지함.');
+
+    console.log(err.stack);
+});
+
+var server = http.createServer(app).listen(app.get('port'), function(){
+    console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
+
+    // 데이터베이스 초기화
+    database.database.init(app, config);
+});
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+socket(server);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+
+}
+
+module.exports = server;

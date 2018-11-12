@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+	<title>신고 하기</title>
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+
+	<style>
+		body        { padding-top:80px; }
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<form action="/admin_ban_add" method="post">
+			<label>신고자 이메일</label><br>
+			<input type="email" name="shingo_email"/><br><br>
+			<label>신고 닉네임</label><br>
+			<input type="text" name="nickname"/><br><br>
+			<label>신고 채팅방 ID</label><a>앞단에서 채팅방 ID 입력해서 넘겨줘야 함</a><br>
+			<input type="number" name="ban_thread_id"/><br><br>
+			<label>신고 사유</label><br>
+			<select name="ban_reason">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select><br><br>
+			<label>신고 내용</label><br>
+			<textarea name="ban_body" cols="100" rows="10"></textarea><br><br>
+			<label>스크린 샷</label><br>
+			<input type="file" id="img_input" accept="image/*"><br>
+			<input type="hidden" value="" name="ban_img" id="ban_img"/><br><br>
+			<input type="submit" value="신고하기"/>
+		</form>
+	</div>
+</div>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+    $("#img_input").on('change', function(event){
+        var fileReader;
+        fileReader = new FileReader();
+        fileReader.readAsDataURL(this.files[0]);
+        fileReader.onload = function(e){
+            $('#ban_img').attr('value', e.target.result);
+            console.log(e.target.result);
+        };
+    });
+</script>
+</body>
+</html>

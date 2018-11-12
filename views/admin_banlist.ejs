@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+	<title>신고 조회</title>
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+
+	<style>
+		body        { padding-top:80px; }
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div>
+			<h2>
+				신고 조회/처리
+			</h2>
+			<h3>신고 목록</h3>
+			<table border="1" cellspacing="0">
+				<colgroup>
+					<col width="50">
+					<col width="100">
+					<col width="200">
+					<col width="30">
+					<col width="50">
+					<col width="100">
+					<col width="200">
+					<col width="100">
+					<col width="100">
+					<col width="230">
+				</colgroup>
+				<thead>
+				<tr>
+					<th scope="col">신고 ID</th>
+					<th scope="col">신고 이미지</th>
+					<th scope="col">신고자 이메일</th>
+					<th scope="col">신고 사유</th>
+					<th scope="col">신고 대상 채팅방 ID</th>
+					<th scope="col">신고 대상 닉네임</th>
+					<th scope="col">신고일</th>
+					<th scope="col">처리자</th>
+					<th scope="col">처리결과</th>
+					<th scope="col">피드백</th>
+				</tr>
+				</thead>
+				<tbody>
+				<%for(var i=0;i<ban_list.length;i++){
+				%>
+				<tr>
+					<td><%=ban_list[i].ban_id%></td>
+					<td>
+						<a href="/admin_ban_edit?ban_id=<%=ban_list[i].ban_id%>" target="_blank" onclick="window.open(this.href, 'mywin','width=700,height=500,toolbar=1,resizable=0'); return false;" >
+							<image src="<%=ban_list[i].ban_img%>" width="100" height="100"></image>
+						</a>
+					</td>
+					<td><%=ban_list[i].shingo_email%></td>
+					<td><%=ban_list[i].ban_reason%></td>
+					<td><%=ban_list[i].ban_thread_id%></td>
+					<td><%=ban_list[i].ban_nickname%></td>
+					<td><%=ban_list[i].created_at%></td>
+					<td><%=ban_list[i].ban_admin%></td>
+					<td><%=ban_list[i].ban_result%> <%=ban_list[i].ban_days==36500?'영구':ban_list[i].ban_days%></td>
+					<td><%=ban_list[i].ban_feedback%></td>
+				</tr>
+				<%}%>
+				</tbody>
+			</table>
+			<br><br>
+			<br><a href="/">관리자 홈으로</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+</body>
+</html>

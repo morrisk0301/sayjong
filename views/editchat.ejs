@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		
+		<title>채팅방 수정하기</title>
+		
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    	
+    	<style>
+        	body        { padding-top:80px; }
+    	</style>
+    
+	</head>
+	<body>
+		
+		<div class="container">
+			<div class="col-sm-6 col-sm-offset-3">
+			    <h1><span class="fa fa-sign-in"></span> 채팅방 수정하기</h1>
+			
+			    <!-- 인증 처리 후 메시지가 있으면 메시지 표시 -->
+ 
+			    <form action="/edittchat" method="post" id="form_thread">
+			        <div class="form-group">
+			            <label>채팅방 ID</label>
+			            <input type="text" class="form-control" name="thread_id" id="thread_id">
+			        </div>
+			        <div class="form-group">
+			            <label>비밀번호</label>
+			            <input type="password" class="form-control" name="password" id="password">
+			        </div>
+					<div class="form-group">
+						<label>인원 수</label>
+						<input type="number" class="form-control" name="thread_n_people" id="thread_n_people">
+					</div>
+					<div class="form-group">
+						<label>채팅방 이미지</label>
+						<input type="file" class="form-control" id="img_input" accept="image/*">
+                        <input type="hidden" value="" name="thread_img" id="thread_img"/>
+					</div>
+					<div class="form-group">
+						<label>비활성화 시간</label>
+						<input type="datetime-local" class="form-control" name="thread_time" id="thread_time">
+					</div>
+					<div class="form-group">
+						<label>카테고리</label><br>
+						<a>카테고리 검색</a><input type="text" id="catsearch"/>
+						<button id="catButton">검색</button><br>
+						<a>카테고리1</a><input type="text" id="thread_category1"/><br>
+						<a>카테고리2</a><input type="text" id="thread_category2"/><br>
+						<a>카테고리3</a><input type="text" id="thread_category3"/><br>
+					</div>
+					<div class="form-group">
+						<label>채팅방 소개</label>
+						<input type="text" class="form-control" name="thread_about" id="thread_about">
+					</div>
+			    </form>
+				<button id="submitButton" class="btn btn-warning btn-lg">채팅방 등록</button>
+			    <hr>
+			</div>
+			
+		</div>
+<!-------------------------------------------------------------------------------------------->
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+        $("#img_input").on('change', function(event){
+            var fileReader;
+            fileReader = new FileReader();
+            fileReader.readAsDataURL(this.files[0]);
+            fileReader.onload = function(e){
+                $('#thread_img').attr('value', e.target.result);
+                console.log(e.target.result);
+            };
+        });
+        $("#use_realname").on("click", function(event){
+            var newval = $("#use_realname").is(":checked");
+            $("#is_use_realname").val(newval);
+		})
+		$('#catButton').bind("click", function(event){
+		    var searchtxt = $('#catsearch').val();
+			window.open("/searchCat/"+searchtxt);
+            return false;
+        })
+
+		$('#submitButton').bind('click', function(event){
+		    var thread_category = []
+			var query = {thread_id: $('#thread_id').val()};
+		    if($('#password').val()!='') query.password = $('#password').val();
+            if($('#thread_n_people').val()!='') query.thread_n_people = $('#thread_n_people').val();
+            if($('#thread_img').val()!='') query.thread_img = $('#thread_img').val();
+            if($('#thread_time').val()!='') query.thread_time = $('#thread_time').val();
+            if($('#thread_about').val()!='') query.thread_about = $('#thread_about').val();
+            if($('#thread_category1').val()!='') thread_category.push($('#thread_category1').val());
+            if($('#thread_category2').val()!='') thread_category.push($('#thread_category2').val());
+            if($('#thread_category3').val()!='') thread_category.push($('#thread_category3').val());
+            if(thread_category.length>0) query.thread_category =JSON.stringify(thread_category)
+			console.log(query);
+            $.post("/editchat", query, function(data, status){
+                document.write((JSON.stringify(data)));
+			})
+		})
+
+
+	</script>
+
+	</body>
+</html>

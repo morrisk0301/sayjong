@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>내 채팅방</title>
+
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+
+    <script>
+        var host = "localhost";
+        //var host = "49.236.137.121";
+        var port = "9948";
+        var socket;
+
+        // 문서 로딩 후 실행됨
+        $(function() {
+
+            var options = {'forceNew':true};
+            var url = 'http://' + host + ':' + port;
+            socket = io.connect(url, options);
+            socket.on('connect', function() {
+                println('웹소켓 서버에 연결되었습니다. : ' + url);
+                socket.on('message', function(message) {
+                    console.log(JSON.stringify(message));
+                    if(message.type=='text') println('<p>'+ message.nickname + ' : ' + message.data + '</p>');
+                    else println('<p><img src="'+message.data+'"/></p>');
+                });
+
+                socket.on('alarm', function(message){
+                    console.log(JSON.stringify((message)));
+                    println('<p>'+ message.command + ' : ' + message.msg + '</p>');
+                })
+
+                socket.on('getmsg', function(message) {
+                    console.log(message);
+                    for(var i=0;i<message.length;i++){
+                        if(message[i].type=='text') println('<p>'+ message[i].nickname + ' : ' + message[i].data + '</p>');
+                        else if(message[i].type=='image') println('<p>'+ message[i].nickname + ' : <img src="'+message[i].data+'"/></p>');
+                    }
+                });
+
+                socket.on('response', function(response) {
+                    console.log(JSON.stringify(response));
+                    println('응답 메시지를 받았습니다. : ' + ', ' + response.code + ', ' + response.message);
+                });
+
+                // 그룹 채팅에서 방과 관련된 이벤트 처리
+                socket.on('room', function(data) {
+                    console.log(JSON.stringify(data));
+
+                    println('<p>방 이벤트 : ' + data.command + '</p>');
+                    println('<p>방 리스트를 받았습니다.</p>');
+                    if (data.command == 'list') { // 방 리스트
+                        var roomCount = data.rooms.length;
+                        $("#roomList").html('<p>방 리스트 ' + roomCount + '개</p>');
+                        for (var i = 0; i < roomCount; i++) {
+                            $("#roomList").append('<p>방 #' + i + ' : ' + data.rooms[i].thread_id + ', ' + data.rooms[i].thread_name
+                                + ', ' + data.rooms[i].thread_superuser_id + ', ' + data.rooms[i].thread_time
+                                + ', ' + data.rooms[i].thread_n_people + ', ' + data.rooms[i].is_open+ '</p>');
+                        }
+                    }
+                });
+            });
+
+            var output = {id:"<%=user.email%>"};
+
+            console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
+            if (socket == undefined) {
+                alert('서버에 연결되어 있지 않습니다. 먼저 서버에 연결하세요.');
+                return;
+            }
+
+            socket.on('disconnect', function() {
+                println('웹소켓 연결이 종료되었습니다.');
+            });
+
+            $("#imageInput").on('change', function(event){
+                var fileReader;
+                var sender = '<%=user.user_id%>';
+                var recipient = $('#roomIdInput').val();
+
+                fileReader = new FileReader();
+                fileReader.readAsDataURL(this.files[0]);
+                fileReader.onload = function(e){
+                    console.log(e.target.result);
+                    var output = {sender:sender, recipient:recipient, data:e.target.result};
+                    socket.emit('image', output);
+                };
+                this.value = "";
+            });
+
+            // 전송 버튼 클릭 시 처리
+            $("#sendButton").bind('click', function(event) {
+
+                var sender = '<%=user.user_id%>';
+                var recipient = $('#roomIdInput').val();
+                var data = $('#dataInput').val();
+
+                var output = {sender:sender, recipient:recipient, data:data};
+                console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
+
+                if (socket == undefined) {
+                    alert('서버에 연결되어 있지 않습니다. 먼저 서버에 연결하세요.');
+                    return;
+                }
+
+                socket.emit('message', output);
+            });
+
+            // 방나가기 버튼 클릭 시 처리
+            $("#exitButton").bind('click', function(event) {
+                var roomId = $('#roomIdInput').val();
+
+                var sender = '<%=user.user_id%>';
+
+                var output = {command:'leave', roomId:roomId, sender:sender};
+                console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
+
+                if (socket == undefined) {
+                    alert('서버에 연결되어 있지 않습니다. 먼저 서버에 연결하세요.');
+                    return;
+                }
+                socket.emit('room', output);
+            });
+
+            $("#joinButton").bind('click', function(event) {
+                var roomId = $('#roomIdInput').val();
+
+                var sender = '<%=user.user_id%>';
+
+                var output = {command:'join', roomId:roomId, sender:sender};
+                console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
+
+                if (socket == undefined) {
+                    alert('서버에 연결되어 있지 않습니다. 먼저 서버에 연결하세요.');
+                    return;
+                }
+                socket.emit('room', output);
+            });
+
+            $("#initButton").bind('click', function(event){
+                var roomId = $('#roomIdInput').val();
+                var sender = '<%=user.user_id%>';
+                var msgquery ={command: 'init', roomId: roomId, sender:sender}
+                socket.emit('getmsg', msgquery);
+            })
+
+            $("#getButton").bind('click', function(event){
+                var roomId = $('#roomIdInput').val();
+                var sender = '<%=user.user_id%>';
+                var start = $('#getStart').val();
+                var end = $('#getEnd').val();
+                var msgquery ={command: 'get', roomId: roomId, sender:sender, msg_idx_start:start, msg_idx_end:end}
+                socket.emit('getmsg', msgquery);
+            })
+
+            $("#searchButton").bind('click', function(event){
+                var roomId = $('#roomIdInput').val();
+                var sender = '<%=user.user_id%>';
+                var searchtxt = $('#searchText').val();
+                var searchId = $('#searchId').val();
+                var msgquery ={command: 'search', roomId: roomId, sender:sender, searchtxt: searchtxt, searchId: searchId}
+                socket.emit('getmsg', msgquery);
+            })
+        });
+
+        // 서버에 연결하는 함수 정의
+
+        function println(data) {
+            console.log(data);
+            $('#result').append('<p>' + data + '</p>');
+        }
+    </script>
+</head>
+<body>
+<h3>내 채팅방</h3>
+<br>
+<br>
+<div>
+    <h3>방 리스트</h3>
+    <%for(var i=0;i<chat.length;i++){%>
+    <span>방 ID: <a><%=chat[i].thread_id%></a></span>
+    <span>방 이름: <a><%=chat[i].thread_name%></a></span>
+    <span>방장 : <a><%=chat[i].thread_superuser_id%></a></span>
+    <span>폭파시간 : <a><%=chat[i].thread_time%></a></span>
+    <span>최대인원 : <a><%=chat[i].thread_n_people%></a></span>
+    <span>공개여부 : <a><%=chat[i].is_open%></a></span>
+    <br>
+    <%}%>
+</div>
+<div id="roomList">
+
+</div>
+<br>
+<div>
+    <div><span>방 아이디 :</span> <input type="text" id="roomIdInput"/><input type="button" id="joinButton" value="방 소켓 연결" /><input type="button" id="exitButton" value="방 소켓 헤제" /></div>
+    <div><span>메시지 데이터 :</span> <input type="text" id="dataInput"/> </div>
+    <div><span>이미지 :</span> <input type="file" id="imageInput" accept="image/*"/> </div>
+    <br>
+    <input type="button" id="sendButton" value="전송" />
+    <br><br>
+    <input type="button" id="initButton" value="현 대화 가져오기"/>
+    <br><br>
+    <a>시작 번호</a>
+    <input type="number" id="getStart"/>
+    <a>끝 번호</a>
+    <input type="number" id="getEnd"/>
+    <input type="button" id="getButton" value="대화 가져오기"/>
+    <br><br>
+    <a>검색어</a>
+    <input type="text" id="searchText"/>
+    <a>검색 번호</a>
+    <input type="Number" id="searchId"/>
+    <input type="button" id="searchButton" value="검색"/>
+</div>
+
+<hr/>
+<p>결과 : </p>
+<div id="result"></div>
+
+</body>
+</html>
