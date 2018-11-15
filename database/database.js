@@ -66,6 +66,7 @@ function createSchema(app, config) {
         else if(i==9) curSchema.plugin(autoIncrement.plugin, {model: 'BannerModel_sj', field: 'banner_id'});
         else if(i==10) curSchema.plugin(autoIncrement.plugin, {model: 'BanModel_sj', field: 'ban_id'});
         else if(i==11) curSchema.plugin(autoIncrement.plugin, {model: 'UserBanModel_sj', field: 'user_ban_id'});
+        else if(i==12) curSchema.plugin(autoIncrement.plugin, {model: 'ThreadBanModel_sj', field: 'thread_ban_id'});
 
 		// User 모델 정의
 		var curModel = mongoose.model(curItem.collection, curSchema);

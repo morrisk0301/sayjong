@@ -14,12 +14,56 @@
 	</style>
 </head>
 <body>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+    $("#form_ban_user").on('submit', function(event){
+        var result = confirm('정말 정지 하시겠습니까?');
+        if(result) return true;
+        else return false;
+    })
+    $("#form_ban_chat").on('submit', function(event){
+        var result = confirm('채팅방 삭제는 되돌릴 수 없습니다. 삭제 하시겠습니까?');
+        if(result) return true;
+        else return false;
+    })
+
+    function postPopUp(formName) {
+        var frm = document.getElementById(formName);
+        window.open('', 'viewer', 'width=1000, height=500');
+        frm.action = formName=='form_chatview' ? "/admin_getchat" : "/admin_ban_thread_info";
+        frm.target = "viewer";
+        frm.method = "post";
+        frm.submit();
+    }
+
+    function getReason(reason){
+        switch(reason){
+            case 1:
+                document.write('성적비하');
+                break;
+            case 2:
+                document.write('청소년 유해');
+                break;
+            case 3:
+                document.write('익명 악용');
+                break;
+            case 4:
+                document.write('어그로');
+                break;
+        }
+    }
+</script>
 <div class="container">
 	<div class="row">
 		<div>
 			<h2>
 				회원 정지
 			</h2>
+			<a>정지 사유:<br>
+			1.성적 비하 발언을 사용한 경우(정지기간 1일)<br>
+			2.청소년 유해 매체물, 유해한 사진, 음담패설, 외설, 음란물 등 유해한 매체를 채팅방여 공유한 경우(영구정지)<br>
+			3.익명을 악용하여 타인의 권리를 침해하는 언어를 사용한 경우(정지기간 1일)<br>
+			4.타인들과 분쟁을 일으킬만한 언어를 사용한 경우 (관리자들 판단하에 1일~영구정지 가능)</a><br><br>
 			<form action="/admin_user_ban" method="post" id="form_ban_user">
 				<label>회원 Email</label>
 				<input type="text" name="ban_email" size="50"/><br>
@@ -48,7 +92,15 @@
 			</h2>
 			<form action="/admin_thread_ban" method="post" id="form_ban_chat">
 				<label>채팅방 ID</label>
-				<input type="number" name="ban_thread_id"/><br><br>
+				<input type="number" name="ban_thread_id"/><br>
+				<label>삭제 사유</label>
+				<select name="ban_reason">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select><br><br>
 				<input type="submit" value="채팅방 삭제하기"/>
 				<br><br>
 			</form>
@@ -74,18 +126,63 @@
 				</tr>
 				</thead>
 				<tbody>
-				<%for(var i=0;i<ban_list.length;i++){
+				<%for(var i=0;i<ban_user_list.length;i++){
 				%>
 				<tr>
-					<td><%=ban_list[i].user_ban_id%></td>
-					<td><%=ban_list[i].ban_email%></td>
-					<td><%=ban_list[i].ban_reason%></td>
-					<td><%=ban_list[i].ban_days%></td>
-					<td><%=ban_list[i].expired_at%></td>
+					<td><%=ban_user_list[i].user_ban_id%></td>
+					<td><%=ban_user_list[i].ban_email%></td>
+					<td><script>getReason(<%=ban_user_list[i].ban_reason%>)</script></td>
+					<td><%=ban_user_list[i].ban_days%></td>
+					<td><%=ban_user_list[i].expired_at%></td>
 					<td>
 						<form action="/admin_user_ban_delete" method="post">
-							<input type="hidden" name="user_ban_id" value="<%=ban_list[i].user_ban_id%>"/>
+							<input type="hidden" name="user_ban_id" value="<%=ban_user_list[i].user_ban_id%>"/>
 							<input type="submit" class="banner_delete" value="delete"/>
+						</form>
+					</td>
+				</tr>
+				<%}%>
+				</tbody>
+			</table>
+			<br><br>
+			<h2>채팅방 삭제 현황</h2>
+			<table border="1" cellspacing="0">
+				<colgroup>
+					<col width="100">
+					<col width="300">
+					<col width="100">
+					<col width="300">
+					<col width="100">
+					<col width="100">
+				</colgroup>
+				<thead>
+				<tr>
+					<th scope="col">정지 ID</th>
+					<th scope="col">정지 채팅방</th>
+					<th scope="col">정지 사유</th>
+					<th scope="col">정지일</th>
+					<th scope="col">정보 상세보기</th>
+					<th scope="col">채팅 조회</th>
+				</tr>
+				</thead>
+				<tbody>
+				<%for(var i=0;i<ban_thread_list.length;i++){
+				%>
+				<tr>
+					<td><%=ban_thread_list[i].thread_ban_id%></td>
+					<td><%=ban_thread_list[i].thread_name%></td>
+					<td><script>getReason(<%=ban_thread_list[i].ban_reason%>)</script></td>
+					<td><%=ban_thread_list[i].created_at%></td>
+					<td>
+						<form id="form_chatinfo">
+							<input type="hidden" name="thread_id" value="<%=ban_thread_list[i].thread_id%>"/>
+							<input type="submit" onClick="postPopUp('form_chatinfo')" value="조회">
+						</form>
+					</td>
+					<td>
+						<form id="form_chatview">
+							<input type="hidden" name="thread_id" value="<%=ban_thread_list[i].thread_id%>"/>
+							<input type="submit" onClick="postPopUp('form_chatview')" value="조회">
 						</form>
 					</td>
 				</tr>
@@ -96,18 +193,5 @@
 		<br><br><a href="/">관리자 홈으로</a>
 	</div>
 </div>
-<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
-<script>
-	$("#form_ban_user").on('submit', function(event){
-        var result = confirm('정말 정지 하시겠습니까?');
-        if(result) return true;
-        else return false;
-	})
-    $("#form_ban_chat").on('submit', function(event){
-        var result = confirm('채팅방 삭제는 되돌릴 수 없습니다. 삭제 하시겠습니까?');
-        if(result) return true;
-        else return false;
-    })
-</script>
 </body>
 </html>

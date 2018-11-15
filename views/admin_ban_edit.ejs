@@ -11,20 +11,59 @@
 
 	<style>
 		body        { padding-top:80px; }
+		.like_input {
+			-moz-appearance: textfield;
+			-webkit-appearance: textfield;
+			background-color: white;
+			background-color: -moz-field;
+			border: 1px solid darkgray;
+			box-shadow: 1px 1px 1px 0 lightgray inset;
+			font: -moz-field;
+			font: -webkit-small-control;
+			margin-top: 5px;
+			padding: 2px 3px;
+			width: 398px;
+		}
 	</style>
 </head>
 <body>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+    $("#ban_reset").on('click', function(event){
+        var result = confirm('정말 초기화 하시겠습니까?');
+        if(result) return true;
+        else return false;
+    })
+
+    function getReason(reason){
+        switch(reason){
+            case 1:
+                document.write('성적비하');
+                break;
+            case 2:
+                document.write('청소년 유해');
+                break;
+            case 3:
+                document.write('익명 악용');
+                break;
+            case 4:
+                document.write('어그로');
+                break;
+        }
+    }
+</script>
+
 <div class="container">
 	<div class="row">
 		<form action="/admin_ban_edit" method="post">
 			<label>신고자 이메일</label><br>
-			<input type="email" name="shingo_email" value="<%=ban.shingo_email%>" size="50" disabled/><br><br>
+			<div class="like_input"><%=ban.shingo_email%></div><br><br>
 			<label>신고 닉네임</label><br>
-			<input type="text" name="nickname" value="<%=ban.ban_nickname%>" size="50" disabled/><br><br>
+			<div class="like_input"><%=ban.ban_nickname%></div><br><br>
 			<label>신고 채팅방 ID</label><br>
-			<input type="number" name="ban_thread_id" value="<%=ban.ban_thread_id%>" size="50" disabled/><br><br>
+			<div class="like_input"><%=ban.ban_thread_id%></div><br><br>
 			<label>신고 사유</label><br>
-			<input type="number" name="ban_reason" value="<%=ban.ban_reason%>" size="50" disabled/><br><br>
+			<div class="like_input"><script>getReason(<%=ban.ban_reason%>)</script></div><br><br>
 			<label>신고 내용</label><br>
 			<textarea name="ban_body" cols="100" rows="10" disabled><%=ban.ban_body%></textarea><br><br>
 			<label>스크린 샷</label><br>
@@ -69,13 +108,5 @@
 		<br><br><br>
 	</div>
 </div>
-<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
-<script>
-    $("#ban_reset").on('click', function(event){
-        var result = confirm('정말 초기화 하시겠습니까?');
-        if(result) return true;
-        else return false;
-    })
-</script>
 </body>
 </html>

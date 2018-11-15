@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+	<title>신고 처리</title>
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+
+	<style>
+		body        { padding-top:80px; }
+		.like_input {
+			-moz-appearance: textfield;
+			-webkit-appearance: textfield;
+			background-color: white;
+			background-color: -moz-field;
+			border: 1px solid darkgray;
+			box-shadow: 1px 1px 1px 0 lightgray inset;
+			font: -moz-field;
+			font: -webkit-small-control;
+			margin-top: 5px;
+			padding: 2px 3px;
+			width: 398px;
+		}
+	</style>
+</head>
+<body>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+    $("#ban_reset").on('click', function(event){
+        var result = confirm('정말 초기화 하시겠습니까?');
+        if(result) return true;
+        else return false;
+    })
+
+    function getReason(reason){
+        switch(reason){
+            case 1:
+                document.write('성적비하');
+                break;
+            case 2:
+                document.write('청소년 유해');
+                break;
+            case 3:
+                document.write('익명 악용');
+                break;
+            case 4:
+                document.write('어그로');
+                break;
+        }
+    }
+
+    function getIsHot(reason){
+        console.log(reason)
+        reason==-1? document.write('false') : document.write('true')
+    }
+</script>
+
+<div class="container">
+	<div class="row">
+		<label>정지 채팅방 ID</label><br>
+		<div class="like_input"><%=chatdata.thread_id%></div><br><br>
+		<label>정지 채팅방 이름</label><br>
+		<div class="like_input"><%=chatdata.thread_name%></div><br><br>
+		<label>정지 채팅방 방장</label><br>
+		<div class="like_input"><%=chatdata.thread_superuser_id%></div><br><br>
+		<label>정지 채팅방 최대 인원수</label><br>
+		<div class="like_input"><%=chatdata.thread_n_people%></div><br><br>
+		<label>정지 채팅방 소개</label><br>
+		<textarea name="ban_body" cols="100" rows="10" disabled><%=chatdata.abouty%></textarea><br><br>
+		<label>정지 채팅방 프로필 이미지</label><br>
+		<image src="<%=chatdata.thread_img%>"></image><br><br>
+		<label>정지 채팅방 폭파시간</label><br>
+		<div class="like_input"><%=chatdata.thread_time%></div><br><br>
+		<label>정지 채팅방 정지 여부</label><br>
+		<div class="like_input"><%=chatdata.is_ban%></div><br><br>
+		<label>정지 채팅방 공개 여부</label><br>
+		<div class="like_input"><%=chatdata.is_open%></div><br><br>
+		<label>정지 채팅방 hot 여부</label><br>
+		<div class="like_input"><script>getIsHot(<%=chatdata.is_hot%>)</script></div><br><br>
+		<label>정지 채팅방 실명 여부</label><br>
+		<div class="like_input"><%=chatdata.is_use_realname%></div><br><br>
+		<label>정지 사유</label><br>
+		<div class="like_input"><script>getReason(<%=chatdata.ban_reason%>)</script></div><br><br>
+		<label>정지일</label><br>
+		<div class="like_input"><%=chatdata.created_at%></div><br><br>
+	</div>
+</div>
+</body>
+</html>

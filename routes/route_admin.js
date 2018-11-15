@@ -86,12 +86,22 @@ module.exports = function(router) {
     router.get('/admin_ban', check_auth, function(req, res){
         console.log('admin_ban 호출됨.');
         var database = req.app.get('database');
-
-        database.UserBanModel_sj.find({},
-            function(err, result){
+        database.ThreadBanModel_sj.find({}).select({
+            'thread_ban_id':1,
+            'thread_id': 1,
+            'thread_name':1,
+            'ban_reason': 1,
+            'created_at': 1
+        }).exec(
+            function(err, thread_result){
                 if(err) throw err;
-                res.render('admin_ban', {ban_list: result});
+                database.UserBanModel_sj.find({},
+                    function(err, user_result){
+                        if(err) throw err;
+                        res.render('admin_ban', {ban_user_list: user_result, ban_thread_list: thread_result});
+                    })
             })
+
     });
 
     router.get('/admin_banlist', check_auth, function(req, res){
@@ -143,6 +153,17 @@ module.exports = function(router) {
                 })
             })
         })
+    });
+
+    router.post('/admin_ban_thread_info', check_auth, function(req, res){
+        console.log('/admin_ban_thread 호출됨.');
+        var database = req.app.get("database");
+        database.ThreadBanModel_sj.findOne({
+            'thread_id': req.body.thread_id
+            },
+            function(err, result){
+                res.render('admin_ban_thread_info', {chatdata:result});
+            })
     });
 
     router.post('/admin_register', check_auth, function(req, res){
@@ -524,15 +545,33 @@ module.exports = function(router) {
                 var exp_date = date.setTime(date.getTime() + 86400000);
                 result.is_ban = true;
                 result.thread_time = exp_date;
-                result.save(function(err){
+                result.save(function(err, result_save){
                     if(err) throw err;
                     database.ThreadParticipantModel_sj.update({
                             'super_thread_id': req.body.ban_thread_id},
                         {'expired_at': exp_date}, {multi:true}, function(err){
                             if(err) throw err;
-                            res.writeHead(200, {'Content-Type': 'text/html;charset=UTF-8'});
-                            res.write('<script type="text/javascript">alert("삭제되었습니다.");window.location=\'/admin_ban\';</script>');
-                            res.end();
+                            var new_thread_ban = database.ThreadBanModel_sj({
+                                'thread_id': result_save.thread_id,
+                                'thread_name': result_save.thread_name,
+                                'thread_superuser_id': result_save.thread_superuser_id,
+                                'thread_n_people': result_save.thread_n_people,
+                                'thread_about': result_save.thread_about,
+                                'thread_img': result_save.thread_img,
+                                'thread_time': result_save.thread_time,
+                                'is_ban': result_save.is_ban,
+                                'is_hot': result_save.is_hot,
+                                'is_open': result_save.is_open,
+                                'is_use_realname': result_save.is_use_realname,
+                                'thread_created_at': result_save.created_at,
+                                'ban_reason': req.body.ban_reason
+                            });
+                            new_thread_ban.save(function(err){
+                                if(err) throw err;
+                                res.writeHead(200, {'Content-Type': 'text/html;charset=UTF-8'});
+                                res.write('<script type="text/javascript">alert("삭제되었습니다.");window.location=\'/admin_ban\';</script>');
+                                res.end();
+                            })
                     })
                 })
             }
