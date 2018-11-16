@@ -34,12 +34,12 @@ module.exports = function(router) {
             },
             function(token, user, done) {
                 var smtpTransport = nodemailer.createTransport(node_smtpTransport({
-                    host: 'smtp.office365.com', // Office 365 server
+                    host: 'smtp.naver.com', // Office 365 server
                     port: 587,     // secure SMTP
                     secureConnection: false, // false for TLS - as a boolean not string - but the default is false so just remove this completely
                     auth: {
-                        user: '13011874@sju.ac.kr',
-                        pass: '453mor30!'
+                        user: 'sayjong_alom',
+                        pass: 'sayjong1!'
                     },
                     tls: {
                         ciphers: 'SSLv3'
@@ -47,7 +47,7 @@ module.exports = function(router) {
                 }));
                 var mailOptions = {
                     to: user.email,
-                    from: '세이종<13011874@sju.ac.kr>',
+                    from: 'Do Not Reply<sayjong_alom@naver.com>',
                     subject: '세이종 비밀번호 재설정',
                     html: '<p>세이종 비밀번호 변경을 위한 이메일 입니다</p><br><br><p><a href = "http://'+req.headers.host+'/reset/'+token+'">' +
                     '이 링크를 클릭하시거나 주소를 브라우저에 복사해서 입력하시기 바랍니다:</a></p><br><p>' +
