@@ -6,10 +6,10 @@ function updateCounter(msg_counter){
     });
 }
 
-function updateThread(thread, thread_id, counter){
-    thread.update({$or: [
-            {'thread_id': thread_id},
-        ]}, {'is_hot': counter < 5 ? counter : -1}, {multi: true}, function(err){
+function updateThread(thread, thread_id, counter, current_count){
+    thread.update(
+        {'thread_id': thread_id}, {'is_hot': counter < 5 && current_count!=-1 ? counter : -1},
+        {multi: true}, function(err){
         if(err) console.log(err);
     })
 }
@@ -21,7 +21,7 @@ function setHot(rawdb){
     msg_counter.find().exec(function(err, result){
         result = result.sort(sortmethod.sortWithCurrentCount);
         result.forEach(function(item, counter){
-            updateThread(thread, item.super_thread_id, counter);
+            updateThread(thread, item.super_thread_id, counter, item.current_count);
         });
         updateCounter(msg_counter);
     });
