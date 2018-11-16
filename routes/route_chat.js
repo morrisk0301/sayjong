@@ -47,209 +47,198 @@ module.exports = function(router) {
         })
     }
 
+    check_login = function(req, res, next){
+        if(!req.user) res.json({loginstatus: false});
+        else return next();
+    };
+
     //chat 화면
-    router.route('/mychat').get(function(req, res) {
+    router.get('/mychat', check_login, function(req, res) {
         console.log('mychat get 요청');
-        if(!req.user) res.json({loginstatus: false, threadlist: null});
-        else{
-            var database = req.app.get('database');
-            var threadlist = [];
-            async.waterfall([
-                function(done){
-                    database.ThreadParticipantModel_sj.find({
-                        'super_user_id': req.user.user_id
-                    }, function(err, thread){
-                        if(err) throw err;
-                        thread = thread.map(function(doc){return doc.super_thread_id});
-                        done(err, thread);
-                    })
-                },
-                function(thread, done){
-                    database.ThreadModel_sj.find({
-                        'thread_id': {$in: thread}
-                    }, function (err, result) {
-                        if(err) throw err;
-
-                        async.map(result, function(item, callback){
-                            getClientNum(item.thread_id, database, function(result_cli){
-                                getCategory(item.thread_id, database, function(result_cat){
-                                    var result_all = {
-                                        'cli': result_cli,
-                                        'cat': result_cat
-                                    };
-                                    callback(null, result_all);
-                                });
-                            })
-                        }, function(err, resultArr){
-                            for(var i=0;i<result.length;i++){
-                                var newChatList = {
-                                    'thread_id': result[i].thread_id,
-                                    'thread_name': result[i].thread_name,
-                                    'is_open': result[i].is_open,
-                                    'thread_n_people': result[i].thread_n_people,
-                                    'thread_time': result[i].thread_time,
-                                    'thread_about': result[i].thread_about,
-                                    'thread_img': result[i].thread_img,
-                                    'client_num': resultArr[i].cli,
-                                    'tag': resultArr[i].cat
-                                };
-                                threadlist.push(newChatList);
-                            }
-                            res.json({loginstatus: true, threadlist: threadlist});
-                        });
-                    });
-                }, function(err){
+        var database = req.app.get('database');
+        var threadlist = [];
+        async.waterfall([
+            function(done){
+                database.ThreadParticipantModel_sj.find({
+                    'super_user_id': req.user.user_id
+                }, function(err, thread){
                     if(err) throw err;
-                }
-            ]);
-        }
-    });
+                    thread = thread.map(function(doc){return doc.super_thread_id});
+                    done(err, thread);
+                })
+            },
+            function(thread, done){
+                database.ThreadModel_sj.find({
+                    'thread_id': {$in: thread}
+                }, function (err, result) {
+                    if(err) throw err;
 
-    router.route('/getAllChat').get(function(req, res) {
-        console.log('getAllChat get 요청');
-        if(!req.user) res.json({loginstatus: false, threadlist: null});
-        else{
-            var database = req.app.get('database');
-            var threadlist = [];
-            database.ThreadModel_sj.find().exec(function(err, result){
-                if(err) throw err;
-
-                async.map(result, function(item, callback){
-                    getClientNum(item.thread_id, database, function(result_cli){
-                        getCategory(item.thread_id, database, function(result_cat){
-                            var result_all = {
-                                'cli': result_cli,
-                                'cat': result_cat
+                    async.map(result, function(item, callback){
+                        getClientNum(item.thread_id, database, function(result_cli){
+                            getCategory(item.thread_id, database, function(result_cat){
+                                var result_all = {
+                                    'cli': result_cli,
+                                    'cat': result_cat
+                                };
+                                callback(null, result_all);
+                            });
+                        })
+                    }, function(err, resultArr){
+                        for(var i=0;i<result.length;i++){
+                            var newChatList = {
+                                'thread_id': result[i].thread_id,
+                                'thread_name': result[i].thread_name,
+                                'is_open': result[i].is_open,
+                                'thread_n_people': result[i].thread_n_people,
+                                'thread_time': result[i].thread_time,
+                                'thread_about': result[i].thread_about,
+                                'thread_img': result[i].thread_img,
+                                'client_num': resultArr[i].cli,
+                                'tag': resultArr[i].cat
                             };
-                            callback(null, result_all);
-                        });
-                    })
-                }, function(err, resultArr){
-                    for(var i=0;i<result.length;i++){
-                        if(threadlist.length > 9) break;
-                        var newChatList = {
-                            'thread_id': result[i].thread_id,
-                            'thread_name': result[i].thread_name,
-                            'is_open': result[i].is_open,
-                            'thread_n_people': result[i].thread_n_people,
-                            'thread_time': result[i].thread_time,
-                            'thread_about': result[i].thread_about,
-                            'client_num': resultArr[i].cli,
-                            'tag': resultArr[i].cat
-                        };
-                        threadlist.push(newChatList);
-                    }
-                    res.json({loginstatus: true, threadlist: threadlist});
-                });
-            });
-        }
-    });
-
-    router.route('/getNewChat').get(function(req, res) {
-        console.log('getNewChat get 요청');
-        if(!req.user) res.json({loginstatus: false, threadlist: null});
-        else{
-            var database = req.app.get('database');
-            var threadlist = [];
-            database.ThreadModel_sj.find().exec(function(err, result){
-                if(err) throw err;
-                result = result.sort(sortmethod.sortWithCreatedAt);
-                async.map(result, function(item, callback){
-                    getClientNum(item.thread_id, database, function(result_cli){
-                        getCategory(item.thread_id, database, function(result_cat){
-                            var result_all = {
-                                'cli': result_cli,
-                                'cat': result_cat
-                            };
-                            callback(null, result_all);
-                        });
-                    })
-                }, function(err, resultArr){
-                    for(var i=0;i<result.length;i++){
-                        if(threadlist.length > 9) break;
-                        var newChatList = {
-                            'thread_id': result[i].thread_id,
-                            'thread_name': result[i].thread_name,
-                            'is_open': result[i].is_open,
-                            'thread_n_people': result[i].thread_n_people,
-                            'thread_time': result[i].thread_time,
-                            'thread_about': result[i].thread_about,
-                            'client_num': resultArr[i].cli,
-                            'tag': resultArr[i].cat
-                        };
-                        threadlist.push(newChatList);
-                    }
-                    res.json({loginstatus: true, threadlist: threadlist});
-                });
-            });
-        }
-    });
-
-    router.route('/getHotChat').get(function(req, res){
-        console.log('getHotChat get 요청');
-        if(!req.user) res.json({loginstatus: false, threadlist: null});
-        else{
-            var database = req.app.get('database');
-            var threadlist = [];
-            database.ThreadModel_sj.find({'is_hot': {$ne: -1}}, function(err, result){
-                if(err) throw err;
-                result = result.sort(sortmethod.sortWithIsHot);
-                async.map(result, function(item, callback){
-                    getClientNum(item.thread_id, database, function(result_cli){
-                        getCategory(item.thread_id, database, function(result_cat){
-                            var result_all = {
-                                'cli': result_cli,
-                                'cat': result_cat
-                            };
-                            callback(null, result_all);
-                        });
-                    })
-                }, function(err, resultArr){
-                    for(var i=0;i<result.length;i++){
-                        var newChatList = {
-                            'thread_id': result[i].thread_id,
-                            'thread_name': result[i].thread_name,
-                            'is_open': result[i].is_open,
-                            'thread_n_people': result[i].thread_n_people,
-                            'thread_time': result[i].thread_time,
-                            'thread_about': result[i].thread_about,
-                            'thread_img': result[i].thread_img,
-                            'client_num': resultArr[i].cli,
-                            'tag': resultArr[i].cat
-                        };
-                        threadlist.push(newChatList);
-                    }
-                    res.json({loginstatus: true, threadlist: threadlist});
-                });
-            });
-        }
-    });
-
-    router.route('/getHotCategory').get(function(req, res){
-        console.log('getHotCategory get 요청');
-        if(!req.user) res.json({loginstatus: false, catlist: null});
-        else{
-            var database = req.app.get('database');
-            var catlist = [];
-            database.CategoryModel_sj.find({
-                'category_hot': {$ne: -1}
-            }, function(err, result){
-                if(err) throw err;
-                for(var i=0;i<result.length;i++){
-                    catlist.push({
-                        category_id: result[i].category_id,
-                        category_name: result[i].category_name
+                            threadlist.push(newChatList);
+                        }
+                        res.json({threadlist: threadlist});
                     });
-                }
-                res.json({loginstatus: true, catlist: catlist});
-            })
-        }
+                });
+            }, function(err){
+                if(err) throw err;
+            }
+        ]);
     });
 
-    router.route('/newchat').post(function(req, res) {
+    router.get('/getAllChat', check_login, function(req, res) {
+        console.log('getAllChat get 요청');
+        var database = req.app.get('database');
+        var threadlist = [];
+        database.ThreadModel_sj.find().exec(function(err, result){
+            if(err) throw err;
+
+            async.map(result, function(item, callback){
+                getClientNum(item.thread_id, database, function(result_cli){
+                    getCategory(item.thread_id, database, function(result_cat){
+                        var result_all = {
+                            'cli': result_cli,
+                            'cat': result_cat
+                        };
+                        callback(null, result_all);
+                    });
+                })
+            }, function(err, resultArr){
+                for(var i=0;i<result.length;i++){
+                    if(threadlist.length > 9) break;
+                    var newChatList = {
+                        'thread_id': result[i].thread_id,
+                        'thread_name': result[i].thread_name,
+                        'is_open': result[i].is_open,
+                        'thread_n_people': result[i].thread_n_people,
+                        'thread_time': result[i].thread_time,
+                        'thread_about': result[i].thread_about,
+                        'client_num': resultArr[i].cli,
+                        'tag': resultArr[i].cat
+                    };
+                    threadlist.push(newChatList);
+                }
+                res.json({threadlist: threadlist});
+            });
+        });
+    });
+
+    router.get('/getNewChat', check_login, function(req, res) {
+        console.log('getNewChat get 요청');
+        var database = req.app.get('database');
+        var threadlist = [];
+        database.ThreadModel_sj.find().exec(function(err, result){
+            if(err) throw err;
+            result = result.sort(sortmethod.sortWithCreatedAt);
+            async.map(result, function(item, callback){
+                getClientNum(item.thread_id, database, function(result_cli){
+                    getCategory(item.thread_id, database, function(result_cat){
+                        var result_all = {
+                            'cli': result_cli,
+                            'cat': result_cat
+                        };
+                        callback(null, result_all);
+                    });
+                })
+            }, function(err, resultArr){
+                for(var i=0;i<result.length;i++){
+                    if(threadlist.length > 9) break;
+                    var newChatList = {
+                        'thread_id': result[i].thread_id,
+                        'thread_name': result[i].thread_name,
+                        'is_open': result[i].is_open,
+                        'thread_n_people': result[i].thread_n_people,
+                        'thread_time': result[i].thread_time,
+                        'thread_about': result[i].thread_about,
+                        'client_num': resultArr[i].cli,
+                        'tag': resultArr[i].cat
+                    };
+                    threadlist.push(newChatList);
+                }
+                res.json({threadlist: threadlist});
+            });
+        });
+    });
+
+    router.get('/getHotChat', check_login, function(req, res){
+        console.log('getHotChat get 요청');
+        var database = req.app.get('database');
+        var threadlist = [];
+        database.ThreadModel_sj.find({'is_hot': {$ne: -1}}, function(err, result){
+            if(err) throw err;
+            result = result.sort(sortmethod.sortWithIsHot);
+            async.map(result, function(item, callback){
+                getClientNum(item.thread_id, database, function(result_cli){
+                    getCategory(item.thread_id, database, function(result_cat){
+                        var result_all = {
+                            'cli': result_cli,
+                            'cat': result_cat
+                        };
+                        callback(null, result_all);
+                    });
+                })
+            }, function(err, resultArr){
+                for(var i=0;i<result.length;i++){
+                    var newChatList = {
+                        'thread_id': result[i].thread_id,
+                        'thread_name': result[i].thread_name,
+                        'is_open': result[i].is_open,
+                        'thread_n_people': result[i].thread_n_people,
+                        'thread_time': result[i].thread_time,
+                        'thread_about': result[i].thread_about,
+                        'thread_img': result[i].thread_img,
+                        'client_num': resultArr[i].cli,
+                        'tag': resultArr[i].cat
+                    };
+                    threadlist.push(newChatList);
+                }
+                res.json({threadlist: threadlist});
+            });
+        });
+    });
+
+    router.get('/getHotCategory', check_login, function(req, res){
+        console.log('getHotCategory get 요청');
+        var database = req.app.get('database');
+        var catlist = [];
+        database.CategoryModel_sj.find({
+            'category_hot': {$ne: -1}
+        }, function(err, result){
+            if(err) throw err;
+            for(var i=0;i<result.length;i++){
+                catlist.push({
+                    category_id: result[i].category_id,
+                    category_name: result[i].category_name
+                });
+            }
+            res.json({catlist: catlist});
+        })
+    });
+
+    router.post('/newchat', check_login, function(req, res) {
         console.log('newchat post요청', req.body);
-        if(!req.user) res.json({newstatus: false, loginstatus: false, errmessage: null, nickname: null});
-        else if(!req.body.thread_name) res.json({newstatus: false, loginstatus: true, errmessage: "채팅방 이름이 입력되지 않았습니다.", nickname: null});
+        if(!req.body.thread_name) res.json({errmessage: "채팅방 이름이 입력되지 않았습니다."});
         else{
             var paramName = req.body.thread_name;
             var paramIsopen = req.body.is_open=='false' ? false : req.body.is_open;
@@ -278,7 +267,7 @@ module.exports = function(router) {
                             else{
                                 participate.participate_thread(result.thread_id, req.user.user_id, database, function(err, nick){
                                     if(err) throw err;
-                                    else res.json({newstatus:true, loginstatus: true, errmessage: null, nickname:nick});
+                                    else res.json({newstatus:true, errmessage: null, nickname:nick});
                                 });
                             }
                         });
@@ -298,7 +287,7 @@ module.exports = function(router) {
                             else{
                                 participate.participate_thread(result.thread_id, req.user.user_id, database, function(err, nick){
                                     if(err) throw err;
-                                    else res.json({newstatus:true, loginstatus: true, errmessage: null, nickname: nick});
+                                    else res.json({newstatus:true, errmessage: null, nickname: nick});
                                 });
                             }
                         });
@@ -308,170 +297,155 @@ module.exports = function(router) {
         }
     });
 
-    router.route('/jointhread').post(function(req, res) {
+    router.post('/jointhread', check_login, function(req, res) {
         console.log('jointhread post요청', req.body);
-        if(!req.user) res.json({joinstatus: false, loginstatus: false, errmessage: null});
-        else{
-            var paramID = req.body.roomID;
-            var paramPW = req.body.roomPW;
-            var database = req.app.get('database');
-            database.ThreadModel_sj.findOne({
-                'thread_id':paramID
-            }, function(err, thread){
-                if(err) throw err;
-                if(!thread.is_open){
-                    console.log('비공개 채팅방 입장');
-                    var authenticated = thread.authenticate(paramPW, thread._doc.salt, thread._doc.pwd_hashed);
-                    if (!authenticated) {
-                        console.log('비밀번호 일치하지 않음.');
-                        res.json({joinstatus:false, errmessage: "채팅방 비밀번호가 일치하지 않습니다."});
-                    } else{
-                        participate.participate_thread(paramID, req.user.user_id, database, function(err, nick){
-                            if(err) res.json({joinstatus:false, errmessage: err});
-                            else res.json({joinstatus:true, errmessage: err, nickname: nick});
-                        });
-                    }
+        var paramID = req.body.roomID;
+        var paramPW = req.body.roomPW;
+        var database = req.app.get('database');
+        database.ThreadModel_sj.findOne({
+            'thread_id':paramID
+        }, function(err, thread){
+            if(err) throw err;
+            if(!thread.is_open){
+                console.log('비공개 채팅방 입장');
+                var authenticated = thread.authenticate(paramPW, thread._doc.salt, thread._doc.pwd_hashed);
+                if (!authenticated) {
+                    console.log('비밀번호 일치하지 않음.');
+                    res.json({joinstatus:false, errmessage: "채팅방 비밀번호가 일치하지 않습니다."});
                 } else{
-                    console.log('공개 채팅방 입장');
                     participate.participate_thread(paramID, req.user.user_id, database, function(err, nick){
                         if(err) res.json({joinstatus:false, errmessage: err});
-                        else res.json({joinstatus:true, errmessage: null, nickname: nick});
+                        else res.json({joinstatus:true, errmessage: err, nickname: nick});
                     });
                 }
-            });
-        }
+            } else{
+                console.log('공개 채팅방 입장');
+                participate.participate_thread(paramID, req.user.user_id, database, function(err, nick){
+                    if(err) res.json({joinstatus:false, errmessage: err});
+                    else res.json({joinstatus:true, errmessage: null, nickname: nick});
+                });
+            }
+        });
     });
 
-    router.route('/leavethread').post(function(req, res) {
+    router.post('/leavethread', check_login, function(req, res) {
         console.log('leavethread post요청', req.body);
-        if(!req.user) res.json({leavestatus: false, loginstatus: false, errmessage: null});
-        else{
-            var paramID = req.body.roomID;
-            var database = req.app.get('database');
-            database.ThreadModel_sj.findOne({
-                'thread_id': paramID
-            }, function(err, thread_result){
-                if(err) throw err;
-                if(thread_result.thread_superuser_id==req.user.user_id){
-                    database.ThreadParticipantModel_sj.find({
-                        'super_thread_id': paramID
-                    }).remove(function(err){
+        var paramID = req.body.roomID;
+        var database = req.app.get('database');
+        database.ThreadModel_sj.findOne({
+            'thread_id': paramID
+        }, function(err, thread_result){
+            if(err) throw err;
+            if(thread_result.thread_superuser_id==req.user.user_id){
+                database.ThreadParticipantModel_sj.find({
+                    'super_thread_id': paramID
+                }).remove(function(err){
+                    if(err) throw err;
+                    thread_result.remove(function(err){
                         if(err) throw err;
-                        thread_result.remove(function(err){
-                            if(err) throw err;
-                            else res.json({leavestatus:true, errmessage: null});
-                        })
+                        else res.json({leavestatus:true, errmessage: null});
                     })
-                }else{
-                    database.ThreadParticipantModel_sj.find({
-                        'super_thread_id': paramID,
-                        'super_user_id': req.user.user_id
-                    }).remove(function(err){
-                        if(err) throw err;
-                        else res.json({leavestatus:true, errmessage: null})
-                    });
-                }
-            });
-        }
+                })
+            }else{
+                database.ThreadParticipantModel_sj.find({
+                    'super_thread_id': paramID,
+                    'super_user_id': req.user.user_id
+                }).remove(function(err){
+                    if(err) throw err;
+                    else res.json({leavestatus:true, errmessage: null})
+                });
+            }
+        });
     });
 
-    router.route('/searchThread/:TEXT').get(function(req, res) {
+    router.get('/searchThread/:TEXT', check_login, function(req, res) {
         console.log('searchThread get 요청', req.params);
         var paramText = req.params.TEXT;
         var database = req.app.get('database');
-        if(!req.user) res.json({loginstatus: false, categorylist: null, threadlist: null});
-        else {
-            async.waterfall([
-                function(done){
-                    var output_cat = [];
-                    database.CategoryModel_sj.find({}, function (err, result) {
-                        if(err) throw err;
-                        for (var i = 0; i < result.length; i++) {
-                            if (result[i].category_name.toLowerCase().includes(paramText.toLowerCase()))
-                                output_cat.push({category_id: result[i].category_id, category_name: result[i].category_name});
-                        }
-                        done(null, output_cat);
-                    });
-                },
-                function(output_cat, done){
-                    var output_thread = [];
-                    database.ThreadModel_sj.find({}, function (err, result) {
-                        if(err) throw err;
-                        for (var i = 0; i < result.length; i++) {
-                            if (result[i].thread_name.toLowerCase().includes(paramText.toLowerCase()))
-                                output_thread.push({thread_id: result[i].thread_id, thread_name: result[i].thread_name});
-                        }
-                        res.json({loginstatus: true, categorylist: output_cat, threadlist: output_thread});
-                    });
-                }, function(err){
+        async.waterfall([
+            function(done){
+                var output_cat = [];
+                database.CategoryModel_sj.find({}, function (err, result) {
                     if(err) throw err;
-                }
-            ])
-        }
+                    for (var i = 0; i < result.length; i++) {
+                        if (result[i].category_name.toLowerCase().includes(paramText.toLowerCase()))
+                            output_cat.push({category_id: result[i].category_id, category_name: result[i].category_name});
+                    }
+                    done(null, output_cat);
+                });
+            },
+            function(output_cat, done){
+                var output_thread = [];
+                database.ThreadModel_sj.find({}, function (err, result) {
+                    if(err) throw err;
+                    for (var i = 0; i < result.length; i++) {
+                        if (result[i].thread_name.toLowerCase().includes(paramText.toLowerCase()))
+                            output_thread.push({thread_id: result[i].thread_id, thread_name: result[i].thread_name});
+                    }
+                    res.json({categorylist: output_cat, threadlist: output_thread});
+                });
+            }, function(err){
+                if(err) throw err;
+            }
+        ])
     });
 
-    router.route('/searchThreadbyCatId/:ID').get(function(req, res) {
+    router.get('/searchThreadbyCatId/:ID', check_login, function(req, res) {
         console.log('searchThreadbyCatId get 요청', req.params);
         var paramId = req.params.ID;
         var database = req.app.get('database');
-        if(!req.user) res.json({loginstatus: false, threadlist: null});
-        else{
-            database.CategoryModel_sj.findOneAndUpdate({
-                'category_id': paramId
-            }, {$inc:{'category_counter':1}}, {new:true}, function(err){
+        database.CategoryModel_sj.findOneAndUpdate({
+            'category_id': paramId
+        }, {$inc:{'category_counter':1}}, {new:true}, function(err){
+            if(err) throw err;
+            database.CategoryParticipantModel_sj.find({
+                'super_category_id': paramId
+            }, function(err, result){
+                var output = [];
                 if(err) throw err;
-                database.CategoryParticipantModel_sj.find({
-                    'super_category_id': paramId
-                }, function(err, result){
-                    var output = [];
-                    if(err) throw err;
-                    for(var i=0;i<result.length;i++){
-                        output.push({thread_id: result[i].super_thread_id, thread_name: result[i].super_thread_name});
-                    }
-                    res.json({loginstatus: true, threadlist: output})
-                })
-            });
-        }
+                for(var i=0;i<result.length;i++){
+                    output.push({thread_id: result[i].super_thread_id, thread_name: result[i].super_thread_name});
+                }
+                res.json({threadlist: output})
+            })
+        });
     });
 
-    router.route('/editchat').post(function(req, res){
+    router.post('/editchat', check_login, function(req, res){
         console.log('editChat post 요청', req.body);
-        if(!req.user) res.json({loginstatus: false, newstatus: false});
-        else{
-            var paramId = req.body.thread_id;
-            var paramPassword = req.body.password ? req.body.password : '';
-            var paramPeople = req.body.thread_n_people;
-            var paramTime = req.body.thread_time;
-            var paramAbout = req.body.thread_about;
-            var paramImage = req.body.thread_img;
-            var paramCategory =  req.body.thread_category ? JSON.parse(req.body.thread_category) : undefined;
-            var database = req.app.get('database');
-            convertImage(paramImage, function(err, paramImage){
+        var paramId = req.body.thread_id;
+        var paramPassword = req.body.password ? req.body.password : '';
+        var paramPeople = req.body.thread_n_people;
+        var paramTime = req.body.thread_time;
+        var paramAbout = req.body.thread_about;
+        var paramImage = req.body.thread_img;
+        var paramCategory =  req.body.thread_category ? JSON.parse(req.body.thread_category) : undefined;
+        var database = req.app.get('database');
+        convertImage(paramImage, function(err, paramImage){
+            if(err) throw err;
+            participate.leave_category(paramId, database, function(err){
                 if(err) throw err;
-                participate.leave_category(paramId, database, function(err){
+                database.ThreadModel_sj.findOne({
+                    'thread_id': paramId
+                }, function(err, result){
                     if(err) throw err;
-                    database.ThreadModel_sj.findOne({
-                        'thread_id': paramId
-                    }, function(err, result){
-                        if(err) throw err;
-                        if(result.thread_superuser_id != req.user.user_id)
-                            return res.json({loginstatus: true, newstatus: false, errmessage: "방장만 방을 수정할 수 있습니다."});
-                        !result.is_open ? result.password = paramPassword : null;
-                        result.thread_n_people = paramPeople;
-                        result.thread_time = paramTime;
-                        result.thread_about = paramAbout;
-                        paramImage ? result.thread_img = paramImage : null;
+                    if(result.thread_superuser_id != req.user.user_id)
+                        return res.json({errmessage: "방장만 방을 수정할 수 있습니다."});
+                    !result.is_open ? result.password = paramPassword : null;
+                    result.thread_n_people = paramPeople;
+                    result.thread_time = paramTime;
+                    result.thread_about = paramAbout;
+                    paramImage ? result.thread_img = paramImage : null;
 
-                        result.save(function(err, result){
+                    result.save(function(err, result){
+                        if(err) throw err;
+                        participate.participate_category(result.thread_id, paramCategory, database, function(err){
                             if(err) throw err;
-                            participate.participate_category(result.thread_id, paramCategory, database, function(err){
-                                if(err) throw err;
-                                else res.json({loginstatus: true, editstatus: true});
-                            });
-                        })
+                            else res.json({editstatus: true});
+                        });
                     })
                 })
-            });
-        }
+            })
+        });
     })
 };

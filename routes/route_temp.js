@@ -51,7 +51,7 @@ module.exports = function(router) {
     });
 
     router.get('/chat', check_auth, function(req, res) {
-        if(!req.user) res.json({loginstatus: false, threadlist: null});
+        if(!req.user) res.redirect('/');
         else{
             var database = req.app.get('database');
             var threadlist = [];
@@ -107,7 +107,7 @@ module.exports = function(router) {
 
     router.get('/chatlist', check_auth, function(req, res) {
         console.log('/chatlist 패스 요청됨');
-        if(!req.user) res.json({login_success: false});
+        if(!req.user) res.redirect('/');
         else{
             var database = req.app.get('database');
             database.ThreadModel_sj.find().exec(function(err, result){
@@ -118,7 +118,7 @@ module.exports = function(router) {
 
     router.get('/newchat', check_auth, function(req, res) {
         console.log('/newchat 패스 요청됨');
-        if(!req.user) res.json({login_success: false});
+        if(!req.user) res.redirect('/');
         else{
             res.render('newchat', {login_success:true});
         }
@@ -126,7 +126,7 @@ module.exports = function(router) {
 
     router.get('/editchat', check_auth, function(req,res){
         console.log('/editchat 패스 요청됨');
-        if(!req.user) res.json({login_success: false});
+        if(!req.user) res.redirect('/');
         else{
             res.render('editchat', {login_success:true});
         }

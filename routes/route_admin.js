@@ -14,6 +14,11 @@ module.exports = function(router) {
         })
     };
 
+    check_login = function(req, res, next){
+        if(!req.user) res.json({loginstatus: false});
+        else return next();
+    };
+
     router.route('/').get(function(req, res) {
         console.log('/ 패스 요청됨.');
         if(req.user)
@@ -152,6 +157,48 @@ module.exports = function(router) {
                     res.end();
                 })
             })
+        })
+    });
+
+    router.get('/admin_get_ban', check_login, function(req, res){
+        console.log('/admin_get_ban 호출됨.');
+        var database = req.app.get('database');
+        database.UserBanModel_sj.findOne({
+            'ban_email': req.query.ban_email
+        }, function(err, result){
+            if(err) throw err;
+            if(!result) res.json({is_ban: false});
+            else res.json({is_ban: true});
+        })
+    });
+
+    router.get('/admin_get_banner', check_login, function(req, res){
+        console.log('/admin_get_banner 호출됨.');
+        var database = req.app.get('database');
+        database.BannerModel_sj.find({}).select({
+            'banner_id': 1,
+            'banner_img': 1,
+            'banner_type': 1,
+            'banner_link': 1,
+            'created_at': 1,
+        }).exec(function(err, result){
+            if(err) throw err;
+            res.json({banner_list: result})
+        })
+    });
+
+    router.get('/admin_get_notice', check_login, function(req, res){
+        console.log('/admin_get_notice 호출됨.');
+        var database = req.app.get('database');
+        database.NoticeModel_sj.find({}).select({
+            'noticd_id': 1,
+            'notice_user': 1,
+            'notice_head': 1,
+            'notice_body': 1,
+            'created_at': 1,
+        }).exec(function(err, result){
+            if(err) throw err;
+            res.json({notice_list: result})
         })
     });
 
