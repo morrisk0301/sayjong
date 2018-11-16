@@ -68,7 +68,6 @@ module.exports = function(router, passport) {
         else if(req.body.password=='' || !req.body.password) return res.json({msg: "2-3"});
         else if(req.body.name=='' || !req.body.name) return res.json({msg: "2-4"});
         else if(req.body.stuid=='' || !req.body.stuid) return res.json({msg: "2-5"});
-        else if(req.body.major=='' || !req.body.major) return res.json({msg: "2-6"});
         else {
             passport.authenticate('local-signup', {
                 failureFlash: true

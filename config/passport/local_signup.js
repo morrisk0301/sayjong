@@ -8,7 +8,6 @@ module.exports = new LocalStrategy({
     // 요청 파라미터 중 name 파라미터 확인
 	var paramName = req.body.name;
 	var paramStuid = req.body.stuid;
-	var paramMajor = req.body.major;
 
 	console.log('passport의 local-signup 호출됨 : ' + email + ', ' + password + ', ' + paramName);
 
@@ -27,35 +26,42 @@ module.exports = new LocalStrategy({
 
             // 모델 인스턴스 객체 만들어 저장
             rawdb.mongoose.model('IdentityCounter').findOne({'model':'UserModel_sj'}, function(err, result){
-                var newuser = new database.UserModel_sj({
-                    'email':email, 'password':password, 'name':paramName, 'user_id': result.count,
-                    'stuid': paramStuid, 'major': paramMajor
-                });
+                if(err) throw err;
+                result.count += 1;
+                result.save(function(err){
+                    if(err) throw err;
+                    var newuser = new database.UserModel_sj({
+                        'email':email, 'password':password, 'name':paramName, 'user_id': result.count,
+                        'stuid': paramStuid
+                    });
 
-                nev.createTempUser(newuser, function(err, existingPersistentUser, newTempUser){
-                    if(err) return done(err);
+                    nev.createTempUser(newuser, function(err, existingPersistentUser, newTempUser){
+                        if(err) return done(err);
 
-                    if(existingPersistentUser){
-                        var error = '2-7';
-                        return done(error);
-                    }
+                        if(existingPersistentUser){
+                            var error = '2-7';
+                            return done(error);
+                        }
 
-                    if(newTempUser){
-                        var URL = newTempUser[nev.options.URLFieldName];
-                        nev.sendVerificationEmail(email, URL, function(err, info){
-                            if(err) return done("2-9");
-                            else {
-                                result.count = result.count + 1;
-                                result.save(function(err){
-                                    return done("2-0");
-                                });
-                            }
-                        })
-                    } else {
-                        var error = '2-8';
-                        return done(error);
-                    }
-                });
+                        if(newTempUser){
+                            var URL = newTempUser[nev.options.URLFieldName];
+                            nev.sendVerificationEmail(email, URL, function(err, info){
+                                if(err)
+                                    throw err;
+                                    //return done("2-9");
+                                else {
+                                    result.count = result.count + 1;
+                                    result.save(function(err){
+                                        return done("2-0");
+                                    });
+                                }
+                            })
+                        } else {
+                            var error = '2-8';
+                            return done(error);
+                        }
+                    });
+                })
             });
 		});
 	});

@@ -14,7 +14,6 @@ Schema.createSchema = function(mongoose) {
         , resetPasswordExpires: {type: Date}
 	    , name: {type: String, index: 'hashed', 'default':''}
 	    , stuid: {type: String, 'default':''}
-	    , major: {type: String, 'default': ''}
 	    , isAuth: {type: Boolean, 'default':false}
         , isUnregistered: {type: Boolean, 'default':false}
 	    , created_at: {type: Date, 'default': Date.now}
