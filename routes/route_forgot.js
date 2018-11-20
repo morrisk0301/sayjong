@@ -104,26 +104,33 @@ module.exports = function(router) {
             },
             function(user, done) {
                 var smtpTransport = nodemailer.createTransport(node_smtpTransport({
-                    service: 'Gmail',
+                    host: 'smtp.naver.com', // Office 365 server
+                    port: 587,     // secure SMTP
+                    secureConnection: false, // false for TLS - as a boolean not string - but the default is false so just remove this completely
                     auth: {
-                        user: 'sayjong.alom@gmail.com',
+                        user: 'sayjong_alom',
                         pass: 'sayjong1!'
+                    },
+                    tls: {
+                        ciphers: 'SSLv3'
                     }
                 }));
                 var mailOptions = {
                     to: user.email,
-                    from: 'Do Not Reply <sajong.alom@gmail.com>',
+                    from: 'Do Not Reply <sayjong_alom@naver.com>',
                     subject: '세이종 비밀번호 재설정이 완료되었습니다.',
                     text: '안녕하세요,\n\n' +
                     '회원님의 세이종 계정 ' + user.email + ' 의 비밀번호가 성공적으로 변경되었습니다.\n'
                 };
                 smtpTransport.sendMail(mailOptions, function(err) {
+                    if(err) throw err;
                     done(err, user);
                 });
             }
         ], function(err, user) {
             if(err){
-                res.render('complete_reset', {resetstatus: false})
+                console.log(err);
+                res.render('complete_reset', {resetstatus: false});
             }
             else{
                 res.render('complete_reset', {resetstatus: true})

@@ -44,6 +44,10 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     $('#form_reset').on('submit', function(event){
+        if($('#password').val().length<6){
+            alert("비밀번호가 6자리 이상이어야 합니다.")
+            return false;
+        }
         if($('#password').val()!=$('#password_confirm').val()){
             alert("비밀번호와 확인 값이 일치하지 않습니다.")
             return false;

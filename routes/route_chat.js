@@ -86,7 +86,7 @@ module.exports = function(router) {
                     }, function(err, resultArr){
                         for(var i=0;i<result.length;i++){
                             var newChatList = {
-                                'thread_id': result[i].thread_id,
+                                'key': result[i].thread_id,
                                 'thread_name': result[i].thread_name,
                                 'is_open': result[i].is_open,
                                 'is_use_realname': result[i].is_use_realname,
@@ -129,7 +129,7 @@ module.exports = function(router) {
                 for(var i=0;i<result.length;i++){
                     if(threadlist.length > 9) break;
                     var newChatList = {
-                        'thread_id': result[i].thread_id,
+                        'key': result[i].thread_id,
                         'thread_name': result[i].thread_name,
                         'is_open': result[i].is_open,
                         'is_use_realname': result[i].is_use_realname,
@@ -167,11 +167,12 @@ module.exports = function(router) {
                 for(var i=0;i<result.length;i++){
                     if(threadlist.length > 9) break;
                     var newChatList = {
-                        'thread_id': result[i].thread_id,
+                        'key': result[i].thread_id,
                         'thread_name': result[i].thread_name,
                         'is_open': result[i].is_open,
                         'is_use_realname': result[i].is_use_realname,
                         'thread_n_people': result[i].thread_n_people,
+                        'thread_img': result[i].thread_img,
                         'thread_time': result[i].thread_time,
                         'thread_about': result[i].thread_about,
                         'client_num': resultArr[i].cli,
@@ -204,7 +205,7 @@ module.exports = function(router) {
             }, function(err, resultArr){
                 for(var i=0;i<result.length;i++){
                     var newChatList = {
-                        'thread_id': result[i].thread_id,
+                        'key': result[i].thread_id,
                         'thread_name': result[i].thread_name,
                         'is_open': result[i].is_open,
                         'is_use_realname': result[i].is_use_realname,
@@ -414,7 +415,8 @@ module.exports = function(router) {
             })
         });
     });
-
+    
+    //edit chat는 1차 출시에서 빠짐
     router.post('/editchat', check_login, function(req, res){
         console.log('editChat post 요청', req.body);
         var paramId = req.body.thread_id;

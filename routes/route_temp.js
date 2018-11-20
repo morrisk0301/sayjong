@@ -133,14 +133,8 @@ module.exports = function(router) {
     });
 
     router.get('/forgot', check_auth, function(req, res) {
-        if (req.user) {
-            console.log('로그인 상태임');
-            res.redirect('/');
-        }
-        else{
-            console.log('/forgot 패스 요청됨.');
-            res.render('forgot.ejs', {login_success:false});
-        }
+        console.log('/forgot 패스 요청됨.');
+        res.render('forgot.ejs', {login_success:false});
     });
 
     router.get('/shingo', check_auth, function(req, res) {
