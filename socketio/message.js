@@ -57,7 +57,8 @@ message = function(io, socket){
                     if(err) console.log(err);
                     message.type="text";
                     message.send_date = result.send_date;
-                        io.in(message.recipient).emit('message', message);
+                    message.message_id = result.message_id;
+                    io.in(message.recipient).emit('message', message);
                 });
             }, function(err){
                 if(err) console.log(err);

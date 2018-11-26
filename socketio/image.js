@@ -23,7 +23,10 @@ getImage = function(io, socket){
                         io.to(socket.id).emit('message', output);
                         return;
                     }
-                    else(done(null));
+                    else{
+                        image['nickname'] = result.nickname;
+                        done(null);
+                    }
                 })
             },
             function(done){
@@ -39,7 +42,8 @@ getImage = function(io, socket){
                     var newimg = new msg({
                         'message_id_unique': id_count,
                         'super_thread_id': parseInt(image.recipient),
-                        'body': result,
+                        'body': result.img_desize,
+                        'body_full': result.img_full,
                         'type': 'image',
                         'sending_user_id': parseInt(image.sender),
                         'expired_at': Date.now()
@@ -50,6 +54,9 @@ getImage = function(io, socket){
                             recipient: image.recipient,
                             sender: image.sender,
                             data: result.body,
+                            message_id_unique:image.message_id_unique,
+                            message_id: result.message_id,
+                            nickname: image.nickname,
                             type: 'image',
                             send_date: result.send_date
                         });

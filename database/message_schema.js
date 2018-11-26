@@ -8,6 +8,7 @@ Schema.createSchema = function(mongoose) {
         , super_thread_id: {type: Number, required: true}
         , send_date: {type: Date, 'default': Date.now}
         , body: {type: String, 'default':''}
+        , body_full: {type: String}
         , type: {type: String}
         , sending_user_id: {type: Number, required: true}
         , expired_at: {type: Date, expires: '30d'}

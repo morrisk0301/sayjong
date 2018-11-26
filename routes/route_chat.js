@@ -241,6 +241,28 @@ module.exports = function(router) {
         })
     });
 
+    router.get('/getFullThreadImage', check_login, function(req, res) {
+        console.log('getFullThreadImage get 요청');
+        var database = req.app.get('database');
+        database.ThreadModel_sj.findOne({
+            'thread_id': req.query.thread_id
+        }, function(err, result){
+            if(err) throw err;
+            res.json({img: result.thread_img_full});
+        })
+    });
+
+    router.get('/getFullMessageImage', check_login, function(req, res) {
+        console.log('getFullMessageImage get 요청');
+        var database = req.app.get('database');
+        database.MessageModel_sj.findOne({
+            'message_id': req.query.message_id
+        }, function(err, result){
+            if(err) throw err;
+            res.json({img: result.body_full});
+        })
+    });
+
     router.post('/newchat', check_login, function(req, res) {
         console.log('newchat post요청', req.body);
         if(!req.body.thread_name) res.json({errmessage: "채팅방 이름이 입력되지 않았습니다."});
@@ -261,8 +283,9 @@ module.exports = function(router) {
                     console.log('오픈 채팅방 만들기 요청');
                     var newthread = new database.ThreadModel_sj({
                         'thread_name': paramName, 'thread_n_people': paramPeople, 'thread_time': paramTime,
-                        'thread_superuser_id': req.user.user_id, 'thread_img': paramImage,
-                        'thread_about': paramAbout, 'is_use_realname': paramIsUseRealname
+                        'thread_superuser_id': req.user.user_id, 'thread_img': paramImage.img_desize,
+                        'thread_img_full': paramImage.img_full, 'thread_about': paramAbout,
+                        'is_use_realname': paramIsUseRealname
                     });
                     newthread.save(function(err, result){
                         if(err) throw err;
@@ -282,7 +305,8 @@ module.exports = function(router) {
                     var newthread = new database.ThreadModel_sj({
                         'thread_name': paramName, 'thread_n_people': paramPeople, 'thread_time': paramTime,
                         'thread_superuser_id': req.user.user_id, 'password': paramPassword, 'is_open': false,
-                        'thread_about': paramAbout, 'thread_img': paramImage, 'is_use_realname': paramIsUseRealname
+                        'thread_about': paramAbout, 'thread_img': paramImage.img_desize,
+                        'thread_img_full': paramImage.img_full, 'is_use_realname': paramIsUseRealname
                     });
                     newthread.save(function(err, result){
                         if(err) throw err;
@@ -441,7 +465,8 @@ module.exports = function(router) {
                     result.thread_n_people = paramPeople;
                     result.thread_time = paramTime;
                     result.thread_about = paramAbout;
-                    paramImage ? result.thread_img = paramImage : null;
+                    paramImage ? result.thread_img = paramImage.img_desize : null;
+                    paramImage ? result.thread_img_full = paramImage.img_full : null;
 
                     result.save(function(err, result){
                         if(err) throw err;

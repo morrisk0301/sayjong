@@ -2,6 +2,7 @@ var imageDataURI = require('image-data-uri');
 var imagemin = require('imagemin');
 var imageminPngquant = require('imagemin-pngquant');
 var imageminJpegRecompress = require('imagemin-jpeg-recompress');
+var sharp = require('sharp');
 
 encodeImage = function(dataURI, callback){
     if(!dataURI) return callback(null, null);
@@ -19,7 +20,19 @@ encodeImage = function(dataURI, callback){
         ]
     }).then(outBuffer => {
         var imageType = encImg.imageType;
-        return callback(null, imageDataURI.encode(outBuffer, imageType));
+
+        sharp(outBuffer)
+            .resize({
+                height: 100,
+                weight: 100
+            })
+            .toBuffer()
+            .then(resize_data => {
+                var img_full = imageDataURI.encode(outBuffer, imageType);
+                var img_desize = imageDataURI.encode(resize_data, imageType);
+
+                return callback(null, {img_full: img_full, img_desize: img_desize});
+            });
     });
 };
 

@@ -12,6 +12,7 @@ Schema.createSchema = function(mongoose) {
         , thread_superuser_id: {type: Number, required: true}
         , thread_n_people: {type: Number, 'default':1000}
         , thread_img: {type:String, 'default':''}
+        , thread_img_full: {type:String, 'default':''}
         , thread_time: {type: Date, 'default': '2100-01-01', expires:'1s'}
         , thread_about: {type: String, 'default': ''}
         , is_ban: {type: Boolean, 'default': false}

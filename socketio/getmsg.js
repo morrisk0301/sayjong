@@ -28,7 +28,9 @@ function initMsgfromDB(msg, ptcp, threadID, callback){
                     'sender': result[i].sending_user_id,
                     'recipient': threadID,
                     'data': result[i].body,
-                    'message_id_unique': result.length-1-result[i].message_id_unique,
+                    //'message_id_unique': result.length-1-result[i].message_id_unique,
+                    'message_id_unique': result[i].message_id_unique,
+                    'message_id': result[i].message_id,
                     'type': result[i].type,
                     'send_date': result[i].send_date,
                     'nickname': resultNick[i]
@@ -57,7 +59,9 @@ function getMsgfromDB(msg, ptcp, threadID, msgStartId, msgEndId, callback){
                     'sender': result[i].sending_user_id,
                     'recipient': threadID,
                     'data': result[i].body,
-                    'message_id_unique': result.length-1-result[i].message_id_unique,
+                    //'message_id_unique': result.length-1-result[i].message_id_unique,
+                    'message_id_unique': result[i].message_id_unique,
+                    'message_id': result[i].message_id,
                     'type': result[i].type,
                     'send_date': result[i].send_date,
                     'nickname': resultNick[i]
@@ -91,7 +95,9 @@ function searchMsgfromDB(msg, ptcp, threadID, searchTxt, msgId, callback){
                             'sender': result[j].sending_user_id,
                             'recipient': threadID,
                             'data': result[j].body,
-                            'message_id_unique': result.length-1-result[j].message_id_unique,
+                            //'message_id_unique': result.length-1-result[j].message_id_unique,
+                            'message_id_unique': result[i].message_id_unique,
+                            'message_id': result[i].message_id,
                             'type': result[j].type,
                             'send_date': result[j].send_date,
                             'nickname': resultNick[j]
