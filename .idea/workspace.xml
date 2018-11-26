@@ -17,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="route_chat.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="route_chat.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-101">
-              <caret line="391" column="7" lean-forward="true" selection-start-line="391" selection-start-column="7" selection-end-line="391" selection-end-column="7" />
+            <state relative-caret-position="525">
+              <caret line="461" column="26" lean-forward="true" selection-start-line="461" selection-start-column="26" selection-end-line="461" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -31,15 +31,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="67">
               <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -83,11 +74,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>alom</find>
-      <find>say</find>
-      <find>resetst</find>
-      <find>pass</find>
-      <find>bych</find>
       <find>f</find>
       <find>.al</find>
       <find>reset</find>
@@ -113,6 +99,11 @@
       <find>new</find>
       <find>335</find>
       <find>leaveth</find>
+      <find>getnew</find>
+      <find>searcht</find>
+      <find>paramid</find>
+      <find>searchthread</find>
+      <find>bycatid</find>
     </findStrings>
     <replaceStrings>
       <replace>pwd_hashed</replace>
@@ -179,8 +170,8 @@
         <option value="$PROJECT_DIR$/socketio/image.js" />
         <option value="$PROJECT_DIR$/socketio/getmsg.js" />
         <option value="$PROJECT_DIR$/views/newchat.ejs" />
-        <option value="$PROJECT_DIR$/routes/route_chat.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/routes/route_chat.js" />
       </list>
     </option>
   </component>
@@ -381,12 +372,12 @@
       <workItem from="1542631350398" duration="174000" />
       <workItem from="1542701480870" duration="6438000" />
       <workItem from="1542795177419" duration="1904000" />
-      <workItem from="1543185924685" duration="8862000" />
+      <workItem from="1543185924685" duration="12329000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="478651000" />
+    <option name="totallyTimeSpent" value="482118000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -401,7 +392,7 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.23965652" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.23965652" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291592" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.2490242" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -410,7 +401,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.35626101" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.35626101" />
       <window_info id="Favorites" order="3" sideWeight="0.5017182" side_tool="true" weight="0.23965652" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -742,24 +733,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/thread_schema.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/categoryParticipant_schema.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
           <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-101">
-          <caret line="391" column="7" lean-forward="true" selection-start-line="391" selection-start-column="7" selection-end-line="391" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -772,8 +749,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
+        <state relative-caret-position="189">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/thread_schema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="461" column="26" lean-forward="true" selection-start-line="461" selection-start-column="26" selection-end-line="461" selection-end-column="26" />
         </state>
       </provider>
     </entry>

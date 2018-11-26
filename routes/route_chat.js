@@ -47,6 +47,60 @@ module.exports = function(router) {
         })
     }
 
+    function searchThreacbyCatid(paramId, database, cb){
+        database.CategoryModel_sj.findOneAndUpdate({
+            'category_id': paramId
+        }, {$inc:{'category_counter':1}}, {new:true}, function(err){
+            if(err) throw err;
+            database.CategoryParticipantModel_sj.find({
+                'super_category_id': paramId
+            }, function(err, result){
+                if(err) throw err;
+                var threadlist = [];
+
+                async.map(result, function(item, callback){
+                    console.log(item);
+                    database.ThreadModel_sj.findOne({
+                        'thread_id': item.super_thread_id
+                    }, function(err, thread_result){
+                        if(err) throw err;
+                        console.log(thread_result);
+                        callback(null, thread_result)
+                    })
+                }, function(err, threadArr){
+                    async.map(threadArr, function(item, callback){
+                        getClientNum(item.thread_id, database, function(result_cli){
+                            getCategory(item.thread_id, database, function(result_cat){
+                                var result_all = {
+                                    'cli': result_cli,
+                                    'cat': result_cat
+                                };
+                                callback(null, result_all);
+                            });
+                        })
+                    }, function(err, resultArr){
+                        for(var i=0;i<result.length;i++){
+                            var newChatList = {
+                                'key': threadArr[i].thread_id,
+                                'thread_name': threadArr[i].thread_name,
+                                'is_open': threadArr[i].is_open,
+                                'is_use_realname': threadArr[i].is_use_realname,
+                                'thread_n_people': threadArr[i].thread_n_people,
+                                'thread_time': threadArr[i].thread_time,
+                                'thread_about': threadArr[i].thread_about,
+                                'thread_img': threadArr[i].thread_img,
+                                'client_num': resultArr[i].cli,
+                                'tag': resultArr[i].cat
+                            };
+                            threadlist.push(newChatList);
+                        }
+                        return cb(null, threadlist)
+                    });
+                });
+            })
+        });
+    }
+
     check_login = function(req, res, next){
         if(!req.user) res.json({loginstatus: false});
         else return next();
@@ -402,11 +456,13 @@ module.exports = function(router) {
                     'category_name': {$regex : new RegExp(paramText, "i")}
                 }, function (err, result) {
                     if(err) throw err;
-                    for (var i = 0; i < result.length; i++) {
-                        if (result[i].category_name.toLowerCase().includes(paramText.toLowerCase()))
-                            output_cat.push({category_id: result[i].category_id, category_name: result[i].category_name});
-                    }
-                    done(null, output_cat);
+                    async.map(result, function(item, callback){
+                        searchThreacbyCatid(item.category_id, database, function(err, result){
+                            callback(null, result)
+                        })
+                    }, function(err, threadlist){
+                        done(null, threadlist)
+                    });
                 });
             },
             function(output_cat, done){
@@ -454,57 +510,9 @@ module.exports = function(router) {
         console.log('searchThreadbyCatId get 요청', req.params);
         var paramId = req.params.ID;
         var database = req.app.get('database');
-        database.CategoryModel_sj.findOneAndUpdate({
-            'category_id': paramId
-        }, {$inc:{'category_counter':1}}, {new:true}, function(err){
-            if(err) throw err;
-            database.CategoryParticipantModel_sj.find({
-                'super_category_id': paramId
-            }, function(err, result){
-                if(err) throw err;
-                var threadlist = [];
-
-                async.map(result, function(item, callback){
-                    console.log(item);
-                    database.ThreadModel_sj.findOne({
-                        'thread_id': item.super_thread_id
-                    }, function(err, thread_result){
-                        if(err) throw err;
-                        console.log(thread_result);
-                        callback(null, thread_result)
-                    })
-                }, function(err, threadArr){
-                    async.map(threadArr, function(item, callback){
-                        getClientNum(item.thread_id, database, function(result_cli){
-                            getCategory(item.thread_id, database, function(result_cat){
-                                var result_all = {
-                                    'cli': result_cli,
-                                    'cat': result_cat
-                                };
-                                callback(null, result_all);
-                            });
-                        })
-                    }, function(err, resultArr){
-                        for(var i=0;i<result.length;i++){
-                            var newChatList = {
-                                'key': threadArr[i].thread_id,
-                                'thread_name': threadArr[i].thread_name,
-                                'is_open': threadArr[i].is_open,
-                                'is_use_realname': threadArr[i].is_use_realname,
-                                'thread_n_people': threadArr[i].thread_n_people,
-                                'thread_time': threadArr[i].thread_time,
-                                'thread_about': threadArr[i].thread_about,
-                                'thread_img': threadArr[i].thread_img,
-                                'client_num': resultArr[i].cli,
-                                'tag': resultArr[i].cat
-                            };
-                            threadlist.push(newChatList);
-                        }
-                        res.json({threadlist: threadlist});
-                    });
-                });
-            })
-        });
+        searchThreacbyCatid(paramId, database, function(err, threadlist){
+            res.json({threadlist:threadlist});
+        })
     });
     
     //edit chat는 1차 출시에서 빠짐
