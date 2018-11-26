@@ -20,26 +20,35 @@
       <file leaf-file-name="route_chat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="243" column="30" lean-forward="true" selection-start-line="243" selection-start-column="30" selection-end-line="243" selection-end-column="30" />
+            <state relative-caret-position="-101">
+              <caret line="391" column="7" lean-forward="true" selection-start-line="391" selection-start-column="7" selection-end-line="391" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="getmsg.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/socketio/getmsg.js">
+      <file leaf-file-name="thread_schema.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/thread_schema.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="99" column="63" selection-start-line="99" selection-start-column="63" selection-end-line="99" selection-end-column="63" />
+            <state relative-caret-position="67">
+              <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+            <state relative-caret-position="210">
+              <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="getmsg.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/socketio/getmsg.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3255">
+              <caret line="185" column="24" lean-forward="true" selection-start-line="185" selection-start-column="24" selection-end-line="185" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -47,17 +56,8 @@
       <file leaf-file-name="convertImage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/database/convertImage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-647">
+            <state relative-caret-position="-80">
               <caret lean-forward="true" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin_ban.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/admin_ban.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -83,19 +83,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>resend</find>
-      <find>nev</find>
-      <find>fort</find>
-      <find>/for</find>
-      <find>/fort</find>
-      <find>sayjong.al</find>
-      <find>운영</find>
-      <find>sayjong.</find>
       <find>alom</find>
       <find>say</find>
       <find>resetst</find>
       <find>pass</find>
-      <find>search</find>
       <find>bych</find>
       <find>f</find>
       <find>.al</find>
@@ -113,6 +104,15 @@
       <find>conver</find>
       <find>message</find>
       <find>nick</find>
+      <find>defaultim</find>
+      <find>setroo</find>
+      <find>newchat</find>
+      <find>thread_time</find>
+      <find>search</find>
+      <find>async.ma</find>
+      <find>new</find>
+      <find>335</find>
+      <find>leaveth</find>
     </findStrings>
     <replaceStrings>
       <replace>pwd_hashed</replace>
@@ -123,7 +123,7 @@
       <replace>loginstatus</replace>
       <replace>recipient</replace>
       <replace>router.get(</replace>
-      <replace />
+      <replace>, check_auth,</replace>
       <replace>ban_user_list</replace>
     </replaceStrings>
   </component>
@@ -136,7 +136,6 @@
         <option value="$PROJECT_DIR$/database/admin_schema.js" />
         <option value="$PROJECT_DIR$/database/notice_schema.js" />
         <option value="$PROJECT_DIR$/database/banner_schema.js" />
-        <option value="$PROJECT_DIR$/views/newchat.ejs" />
         <option value="$PROJECT_DIR$/views/admin_restriction.ejs" />
         <option value="$PROJECT_DIR$/database/shingo_schema.js" />
         <option value="$PROJECT_DIR$/views/admin_pwreset.ejs" />
@@ -172,15 +171,16 @@
         <option value="$PROJECT_DIR$/views/reset.ejs" />
         <option value="$PROJECT_DIR$/routes/route_forgot.js" />
         <option value="$PROJECT_DIR$/database/set_hot_tag.js" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/database/desizeImage.js" />
         <option value="$PROJECT_DIR$/database/convertImage.js" />
         <option value="$PROJECT_DIR$/database/thread_schema.js" />
-        <option value="$PROJECT_DIR$/routes/route_chat.js" />
         <option value="$PROJECT_DIR$/database/message_schema.js" />
         <option value="$PROJECT_DIR$/socketio/message.js" />
         <option value="$PROJECT_DIR$/socketio/image.js" />
         <option value="$PROJECT_DIR$/socketio/getmsg.js" />
+        <option value="$PROJECT_DIR$/views/newchat.ejs" />
+        <option value="$PROJECT_DIR$/routes/route_chat.js" />
+        <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
   </component>
@@ -200,7 +200,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-12" />
     <option name="width" value="981" />
     <option name="height" value="1032" />
@@ -381,12 +381,12 @@
       <workItem from="1542631350398" duration="174000" />
       <workItem from="1542701480870" duration="6438000" />
       <workItem from="1542795177419" duration="1904000" />
-      <workItem from="1543185924685" duration="3803000" />
+      <workItem from="1543185924685" duration="8862000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="473592000" />
+    <option name="totallyTimeSpent" value="478651000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -434,20 +434,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/shingo.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="34" column="78" selection-start-line="34" selection-start-column="78" selection-end-line="34" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/categoryParticipant_schema.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/test.js" />
     <entry file="file://$PROJECT_DIR$/socketio/room.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -681,27 +667,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/admin_ban.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/thread_schema.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="14" column="25" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/defaultThreadImage.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-13167" />
@@ -725,13 +690,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
           <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/convertImage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-647">
-          <caret lean-forward="true" />
         </state>
       </provider>
     </entry>
@@ -763,17 +721,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/admin_ban.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-420">
+          <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/convertImage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-80">
+          <caret lean-forward="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/newchat.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="104" column="42" lean-forward="true" selection-start-line="104" selection-start-column="42" selection-end-line="104" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/thread_schema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/categoryParticipant_schema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="243" column="30" lean-forward="true" selection-start-line="243" selection-start-column="30" selection-end-line="243" selection-end-column="30" />
+        <state relative-caret-position="-101">
+          <caret line="391" column="7" lean-forward="true" selection-start-line="391" selection-start-column="7" selection-end-line="391" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/socketio/getmsg.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="99" column="63" selection-start-line="99" selection-start-column="63" selection-end-line="99" selection-end-column="63" />
+        <state relative-caret-position="3255">
+          <caret line="185" column="24" lean-forward="true" selection-start-line="185" selection-start-column="24" selection-end-line="185" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
         </state>
       </provider>
     </entry>

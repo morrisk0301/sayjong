@@ -369,10 +369,14 @@ module.exports = function(router) {
                 database.ThreadParticipantModel_sj.find({
                     'super_thread_id': paramID
                 }).remove(function(err){
-                    if(err) throw err;
-                    thread_result.remove(function(err){
-                        if(err) throw err;
-                        else res.json({leavestatus:true, errmessage: null});
+                    database.CategoryParticipantModel_sj.find({
+                        'super_thread_id': paramID
+                    }).remove(function(err){
+                        if (err) throw err;
+                        thread_result.remove(function (err) {
+                            if (err) throw err;
+                            else res.json({leavestatus: true, errmessage: null});
+                        })
                     })
                 })
             }else{
@@ -394,7 +398,9 @@ module.exports = function(router) {
         async.waterfall([
             function(done){
                 var output_cat = [];
-                database.CategoryModel_sj.find({}, function (err, result) {
+                database.CategoryModel_sj.find({
+                    'category_name': {$regex : new RegExp(paramText, "i")}
+                }, function (err, result) {
                     if(err) throw err;
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].category_name.toLowerCase().includes(paramText.toLowerCase()))
@@ -405,13 +411,38 @@ module.exports = function(router) {
             },
             function(output_cat, done){
                 var output_thread = [];
-                database.ThreadModel_sj.find({}, function (err, result) {
+                database.ThreadModel_sj.find({
+                    'thread_name': {$regex : new RegExp(paramText, "i")}
+                }, function (err, result) {
                     if(err) throw err;
-                    for (var i = 0; i < result.length; i++) {
-                        if (result[i].thread_name.toLowerCase().includes(paramText.toLowerCase()))
-                            output_thread.push({thread_id: result[i].thread_id, thread_name: result[i].thread_name});
-                    }
-                    res.json({categorylist: output_cat, threadlist: output_thread});
+                    async.map(result, function(item, callback){
+                        getClientNum(item.thread_id, database, function(result_cli){
+                            getCategory(item.thread_id, database, function(result_cat){
+                                var result_all = {
+                                    'cli': result_cli,
+                                    'cat': result_cat
+                                };
+                                callback(null, result_all);
+                            });
+                        })
+                    }, function(err, resultArr){
+                        for(var i=0;i<result.length;i++){
+                            var newChatList = {
+                                'key': result[i].thread_id,
+                                'thread_name': result[i].thread_name,
+                                'is_open': result[i].is_open,
+                                'is_use_realname': result[i].is_use_realname,
+                                'thread_n_people': result[i].thread_n_people,
+                                'thread_time': result[i].thread_time,
+                                'thread_about': result[i].thread_about,
+                                'thread_img': result[i].thread_img,
+                                'client_num': resultArr[i].cli,
+                                'tag': resultArr[i].cat
+                            };
+                            output_thread.push(newChatList);
+                        }
+                        res.json({categorylist: output_cat, threadlist: output_thread});
+                    });
                 });
             }, function(err){
                 if(err) throw err;
@@ -430,12 +461,48 @@ module.exports = function(router) {
             database.CategoryParticipantModel_sj.find({
                 'super_category_id': paramId
             }, function(err, result){
-                var output = [];
                 if(err) throw err;
-                for(var i=0;i<result.length;i++){
-                    output.push({thread_id: result[i].super_thread_id, thread_name: result[i].super_thread_name});
-                }
-                res.json({threadlist: output})
+                var threadlist = [];
+
+                async.map(result, function(item, callback){
+                    console.log(item);
+                    database.ThreadModel_sj.findOne({
+                        'thread_id': item.super_thread_id
+                    }, function(err, thread_result){
+                        if(err) throw err;
+                        console.log(thread_result);
+                        callback(null, thread_result)
+                    })
+                }, function(err, threadArr){
+                    async.map(threadArr, function(item, callback){
+                        getClientNum(item.thread_id, database, function(result_cli){
+                            getCategory(item.thread_id, database, function(result_cat){
+                                var result_all = {
+                                    'cli': result_cli,
+                                    'cat': result_cat
+                                };
+                                callback(null, result_all);
+                            });
+                        })
+                    }, function(err, resultArr){
+                        for(var i=0;i<result.length;i++){
+                            var newChatList = {
+                                'key': threadArr[i].thread_id,
+                                'thread_name': threadArr[i].thread_name,
+                                'is_open': threadArr[i].is_open,
+                                'is_use_realname': threadArr[i].is_use_realname,
+                                'thread_n_people': threadArr[i].thread_n_people,
+                                'thread_time': threadArr[i].thread_time,
+                                'thread_about': threadArr[i].thread_about,
+                                'thread_img': threadArr[i].thread_img,
+                                'client_num': resultArr[i].cli,
+                                'tag': resultArr[i].cat
+                            };
+                            threadlist.push(newChatList);
+                        }
+                        res.json({threadlist: threadlist});
+                    });
+                });
             })
         });
     });
