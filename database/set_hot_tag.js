@@ -19,6 +19,7 @@ function setHot(rawdb){
     console.log('category_hot 리셋 완료');
     category.find().exec(function(err, result){
         result = result.sort(sortmethod.sortWithCategoryCounter);
+        console.log(result);
         result.forEach(function(item, counter){
             updateCategory(category, item.category_id, counter, item.category_counter);
         });

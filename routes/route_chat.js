@@ -284,7 +284,9 @@ module.exports = function(router) {
         database.CategoryModel_sj.find({
             'category_hot': {$ne: -1}
         }, function(err, result){
+
             if(err) throw err;
+            result = result.sort(sortmethod.sortWithCategoryHot);
             for(var i=0;i<result.length;i++){
                 catlist.push({
                     category_id: result[i].category_id,

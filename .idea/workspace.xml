@@ -17,11 +17,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="route_chat.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="route_chat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="464" column="21" selection-start-line="464" selection-start-column="21" selection-end-line="464" selection-end-column="21" />
+            <state relative-caret-position="214">
+              <caret line="289" selection-start-line="289" selection-end-line="290" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sort.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/database/sort.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="27" column="23" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -56,8 +65,17 @@
       <file leaf-file-name="set_hot_chat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/database/set_hot_chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+            <state relative-caret-position="357">
+              <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="set_hot_tag.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/set_hot_tag.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -74,8 +92,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>f</find>
-      <find>.al</find>
       <find>reset</find>
       <find>gma</find>
       <find>passw</find>
@@ -104,6 +120,8 @@
       <find>paramid</find>
       <find>searchthread</find>
       <find>bycatid</find>
+      <find>gethotchat</find>
+      <find>gethotcate</find>
     </findStrings>
     <replaceStrings>
       <replace>pwd_hashed</replace>
@@ -121,7 +139,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/config/config_admin.js" />
         <option value="$PROJECT_DIR$/app_admin.js" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/database/admin_schema.js" />
@@ -156,12 +173,10 @@
         <option value="$PROJECT_DIR$/config/passport/local_signup.js" />
         <option value="$PROJECT_DIR$/routes/route_admin.js" />
         <option value="$PROJECT_DIR$/config/email_verification.js" />
-        <option value="$PROJECT_DIR$/database/set_hot_chat.js" />
         <option value="$PROJECT_DIR$/routes/route_temp.js" />
         <option value="$PROJECT_DIR$/views/complete_reset.ejs" />
         <option value="$PROJECT_DIR$/views/reset.ejs" />
         <option value="$PROJECT_DIR$/routes/route_forgot.js" />
-        <option value="$PROJECT_DIR$/database/set_hot_tag.js" />
         <option value="$PROJECT_DIR$/database/desizeImage.js" />
         <option value="$PROJECT_DIR$/database/convertImage.js" />
         <option value="$PROJECT_DIR$/database/thread_schema.js" />
@@ -172,6 +187,9 @@
         <option value="$PROJECT_DIR$/views/newchat.ejs" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/routes/route_chat.js" />
+        <option value="$PROJECT_DIR$/database/set_hot_chat.js" />
+        <option value="$PROJECT_DIR$/database/set_hot_tag.js" />
+        <option value="$PROJECT_DIR$/database/sort.js" />
       </list>
     </option>
   </component>
@@ -373,12 +391,12 @@
       <workItem from="1542701480870" duration="6438000" />
       <workItem from="1542795177419" duration="1904000" />
       <workItem from="1543185924685" duration="12928000" />
-      <workItem from="1543239477108" duration="481000" />
+      <workItem from="1543239477108" duration="1598000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="483198000" />
+    <option name="totallyTimeSpent" value="484315000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -391,7 +409,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.23965652" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291592" />
@@ -547,13 +564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/sort.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="32" column="77" selection-start-line="32" selection-start-column="77" selection-end-line="32" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/admin_notice.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
@@ -645,13 +655,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/set_hot_tag.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/participate_method.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
@@ -669,13 +672,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
           <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/set_hot_chat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -758,8 +754,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="464" column="21" selection-start-line="464" selection-start-column="21" selection-end-line="464" selection-end-column="21" />
+        <state relative-caret-position="214">
+          <caret line="289" selection-start-line="289" selection-end-line="290" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/set_hot_chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/set_hot_tag.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/sort.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="27" column="23" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
         </state>
       </provider>
     </entry>
