@@ -452,17 +452,17 @@ module.exports = function(router) {
         async.waterfall([
             function(done){
                 var output_cat = [];
-                database.CategoryModel_sj.find({
-                    'category_name': {$regex : new RegExp(paramText, "i")}
-                }, function (err, result) {
+                database.CategoryModel_sj.findOne({
+                    'category_name': paramText
+                }, function (err, cat_result) {
                     if(err) throw err;
-                    async.map(result, function(item, callback){
-                        searchThreacbyCatid(item.category_id, database, function(err, result){
-                            callback(null, result)
+                    if(!cat_result) done(null, null);
+                    else {
+                        searchThreacbyCatid(cat_result.category_id, database, function (err, result) {
+                            if (err) done(null, null);
+                            else done(null, result)
                         })
-                    }, function(err, threadlist){
-                        done(null, threadlist)
-                    });
+                    }
                 });
             },
             function(output_cat, done){
