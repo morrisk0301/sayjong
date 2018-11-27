@@ -142,4 +142,9 @@ module.exports = function(router) {
         res.render('shingo')
     });
 
+    router.get('/withdrawal', check_auth, function(req, res) {
+        console.log('withdrawal 요청됨');
+        res.render('withdrawal')
+    });
+
 };

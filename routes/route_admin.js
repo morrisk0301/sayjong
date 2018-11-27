@@ -404,7 +404,7 @@ module.exports = function(router) {
             }, function(err, user){
                 if(err) throw err;
                 var newBanner = new database.BannerModel_sj({
-                    'banner_img': paramImage,
+                    'banner_img': paramImage.img_full,
                     'banner_user': user.nickname,
                     'banner_type': req.body.banner_type,
                     'banner_link': req.body.banner_type=='Link'? req.body.banner_link : null,
@@ -445,7 +445,7 @@ module.exports = function(router) {
                     'banner_id': req.body.banner_id
                 }, function(err, result){
                     if(err) throw err;
-                    result.banner_img = paramImage;
+                    result.banner_img = paramImage.img_full;
                     result.banner_user = user.nickname;
                     result.banner_type = req.body.banner_type;
                     result.banner_link = req.body.banner_type=='Link'? req.body.banner_link : null;
@@ -470,7 +470,7 @@ module.exports = function(router) {
                 'ban_reason': req.body.ban_reason,
                 'ban_nickname': req.body.nickname,
                 'ban_body': req.body.ban_body,
-                'ban_img': paramImage
+                'ban_img': paramImage.img_full
             });
             newBan.save(function(err){
                 if(err) throw err;

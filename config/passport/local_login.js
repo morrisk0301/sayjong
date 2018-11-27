@@ -8,7 +8,7 @@ module.exports = new LocalStrategy({
 		console.log('passport의 local-login 호출됨 : ' + email + ', ' + password);
 		var database = req.app.get('database');
 	    database.UserModel_sj.findOne({ 'email' :  email }, function(err, user) {
-	    	if (err) return done(null, null, "1-7");
+	    	if (err) return done(null, null, "1-8");
 
 	    	// 등록된 사용자가 없는 경우
 	    	if (!user) {
@@ -16,6 +16,8 @@ module.exports = new LocalStrategy({
 	    		return done(null, null, "1-2");
 	    	}
 	    	else{
+	    		if(user.isUnregistered)
+	    			return done(null, null, "1-7");
 	    		database.UserBanModel_sj.findOne({
 					'ban_email': email
 				}, function(err, ban_user){

@@ -21,7 +21,7 @@ module.exports = function(router) {
                 database.UserModel_sj.findOne({ email: req.body.email }, function(err, user) {
                     if(err) throw err;
                     if (!user) {
-                        res.json({forgotstatus: false, errmessage:"등록된 이메일이 존재하지 않습니다.", forgotuser: null});
+                        res.json({forgotstatus: false, errmessage:"등록된 이메일이 존재하지 않습니다."});
                     }
                     user.resetPasswordToken = token;
                     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
@@ -55,7 +55,7 @@ module.exports = function(router) {
                 };
                 smtpTransport.sendMail(mailOptions, function(err) {
                     if(err) throw err;
-                    else{res.json({forgotstatus: true, errmessage:null, forgotuser: user});}
+                    else{res.json({forgotstatus: true, errmessage:null});}
                 });
             }
         ], function(err){
