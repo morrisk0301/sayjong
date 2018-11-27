@@ -1,8 +1,7 @@
-var async = require('async');
-
 module.exports = function(router, passport) {
     console.log('route_user 호출됨.');
 
+    var async = require('async');
     // 로그인 인증
     router.post('/login', function(req, res){
         console.log("로그인 포스트 요청", req.body);
@@ -108,16 +107,47 @@ module.exports = function(router, passport) {
     router.post('/withdrawal', function(req, res){
         console.log('withdrawal post 요청', req.body);
         var database = req.app.get('database');
-        database.UserModel_sj.findOne({
-            'email': req.body.email
-        }, function(err, result){
-            if(err) throw err;
-            result.isUnregistered = true;
-            result.save(function(err){
+        async.waterfall([
+            function(done){
+                database.UserModel_sj.findOne({
+                    'email': req.body.email
+                }, function(err, result){
+                    result.isUnregistered = true;
+                    result.save(function(err){
+                        if(err) throw err;
+                        done(null, result.user_id)
+                    })
+                })
+            },
+            function(user_id, done){
+                database.ThreadModel_sj.find({
+                    'thread_superuser_id': user_id
+                }, function(err, result){
+                    async.map(result, function(item, callback){
+                        item.remove(function(err){
+                            callback(err);
+                        })
+                    }, function(err){
+                        if(err) throw err;
+                        done(null, result);
+                    })
+                })
+            },
+            function(threadArr, done){
+                async.map(threadArr, function(item, callback){
+                    database.CategoryParticipantModel_sj.find({
+                        'super_thread_id': item.thread_id
+                    }).remove(function(err){
+                        callback(err);
+                    })
+                }, function(err){
+                    if(err) throw err;
+                    req.logout();
+                    res.json({withdrawalstatus:true})
+                })
+            }, function(err){
                 if(err) throw err;
-                req.logout();
-                res.json({withdrawalstatus:true})
-            })
-        })
+            }
+        ])
     });
 };

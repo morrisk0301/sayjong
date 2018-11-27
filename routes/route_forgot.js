@@ -20,9 +20,10 @@ module.exports = function(router) {
                 var database = req.app.get('database');
                 database.UserModel_sj.findOne({ email: req.body.email }, function(err, user) {
                     if(err) throw err;
-                    if (!user) {
-                        res.json({forgotstatus: false, errmessage:"등록된 이메일이 존재하지 않습니다."});
-                    }
+                    if (!user)
+                        return res.json({forgotstatus: false, errmessage:"등록된 이메일이 존재하지 않습니다."});
+                    else if (user.isUnregistered)
+                        return res.json({forgotstatus: false, errmessage:"탈퇴한 회원입니다."});
                     user.resetPasswordToken = token;
                     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 

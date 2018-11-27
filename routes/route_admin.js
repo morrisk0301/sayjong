@@ -160,7 +160,7 @@ module.exports = function(router) {
         })
     });
 
-    router.get('/admin_get_ban', check_login, function(req, res){
+    router.get('/admin_get_ban', function(req, res){
         console.log('/admin_get_ban 호출됨.');
         var database = req.app.get('database');
         database.UserBanModel_sj.findOne({

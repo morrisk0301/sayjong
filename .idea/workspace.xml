@@ -20,8 +20,8 @@
       <file leaf-file-name="route_chat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="289" selection-start-line="289" selection-end-line="290" />
+            <state relative-caret-position="118">
+              <caret line="206" column="43" selection-start-line="206" selection-start-column="39" selection-end-line="206" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -35,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="route_forgot.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/route_forgot.js">
+      <file leaf-file-name="route_user.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/routes/route_user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="61" column="37" lean-forward="true" selection-start-line="61" selection-start-column="37" selection-end-line="61" selection-end-column="37" />
+            <state relative-caret-position="168">
+              <caret line="127" column="36" selection-start-line="127" selection-start-column="36" selection-end-line="127" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -47,8 +47,8 @@
       <file leaf-file-name="route_admin.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/route_admin.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="472" column="34" selection-start-line="472" selection-start-column="27" selection-end-line="472" selection-end-column="34" />
+            <state relative-caret-position="118">
+              <caret line="99" column="15" selection-start-line="99" selection-start-column="11" selection-end-line="99" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -62,11 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="withdrawal.ejs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="withdrawal.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/withdrawal.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
-              <caret line="22" column="60" selection-start-line="22" selection-start-column="60" selection-end-line="22" selection-end-column="60" />
+              <caret line="22" selection-start-line="22" selection-end-line="23" />
             </state>
           </provider>
         </entry>
@@ -92,19 +92,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>thread_time</find>
-      <find>search</find>
-      <find>async.ma</find>
-      <find>new</find>
-      <find>335</find>
-      <find>leaveth</find>
-      <find>getnew</find>
-      <find>searcht</find>
-      <find>paramid</find>
-      <find>searchthread</find>
-      <find>bycatid</find>
-      <find>gethotchat</find>
-      <find>gethotcate</find>
       <find>req.body</find>
       <find>forgot</find>
       <find>forgots</find>
@@ -122,6 +109,19 @@
       <find>withdrawl</find>
       <find>withdrawal</find>
       <find>채ㅜ</find>
+      <find>check</find>
+      <find>admin_get</find>
+      <find>leave</find>
+      <find>water</find>
+      <find>superu</find>
+      <find>remove</find>
+      <find>map</find>
+      <find>cate</find>
+      <find>categoryp</find>
+      <find>CategoryP</find>
+      <find>async.map</find>
+      <find>waterfal</find>
+      <find>exec</find>
     </findStrings>
     <replaceStrings>
       <replace>pwd_hashed</replace>
@@ -132,7 +132,7 @@
       <replace>loginstatus</replace>
       <replace>recipient</replace>
       <replace>router.get(</replace>
-      <replace />
+      <replace>, check_auth,</replace>
       <replace>ban_user_list</replace>
     </replaceStrings>
   </component>
@@ -183,13 +183,13 @@
         <option value="$PROJECT_DIR$/routes/route_chat.js" />
         <option value="$PROJECT_DIR$/database/set_hot_chat.js" />
         <option value="$PROJECT_DIR$/database/sort.js" />
-        <option value="$PROJECT_DIR$/routes/route_forgot.js" />
-        <option value="$PROJECT_DIR$/routes/route_admin.js" />
         <option value="$PROJECT_DIR$/config/passport/local_login.js" />
-        <option value="$PROJECT_DIR$/routes/route_user.js" />
         <option value="$PROJECT_DIR$/routes/route_temp.js" />
         <option value="$PROJECT_DIR$/database/set_hot_tag.js" />
         <option value="$PROJECT_DIR$/views/withdrawal.ejs" />
+        <option value="$PROJECT_DIR$/routes/route_admin.js" />
+        <option value="$PROJECT_DIR$/routes/route_forgot.js" />
+        <option value="$PROJECT_DIR$/routes/route_user.js" />
       </list>
     </option>
   </component>
@@ -209,7 +209,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-12" />
     <option name="width" value="981" />
     <option name="height" value="1032" />
@@ -392,12 +392,12 @@
       <workItem from="1542795177419" duration="1904000" />
       <workItem from="1543185924685" duration="12928000" />
       <workItem from="1543239477108" duration="1885000" />
-      <workItem from="1543296217090" duration="2717000" />
+      <workItem from="1543296217090" duration="6885000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="487319000" />
+    <option name="totallyTimeSpent" value="491487000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -412,7 +412,7 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.23965652" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.23965652" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291592" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
@@ -420,7 +420,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.35626101" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.35626101" />
       <window_info id="Favorites" order="3" sideWeight="0.5017182" side_tool="true" weight="0.23965652" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.2490242" />
@@ -683,20 +683,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/sort.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/route_forgot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="61" column="37" lean-forward="true" selection-start-line="61" selection-start-column="37" selection-end-line="61" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/socketio/getmsg.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="158">
@@ -708,20 +694,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="18" column="39" lean-forward="true" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/route_user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="118" column="36" lean-forward="true" selection-start-line="118" selection-start-column="36" selection-end-line="118" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/route_admin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="472" column="34" selection-start-line="472" selection-start-column="27" selection-end-line="472" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -756,13 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="289" selection-start-line="289" selection-end-line="290" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/set_hot_tag.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
@@ -780,7 +745,42 @@
     <entry file="file://$PROJECT_DIR$/views/withdrawal.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="22" column="60" selection-start-line="22" selection-start-column="60" selection-end-line="22" selection-end-column="60" />
+          <caret line="22" selection-start-line="22" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/route_forgot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="29" column="45" lean-forward="true" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/sort.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="206" column="43" selection-start-line="206" selection-start-column="39" selection-end-line="206" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/route_admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="99" column="15" selection-start-line="99" selection-start-column="11" selection-end-line="99" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/route_user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="127" column="36" selection-start-line="127" selection-start-column="36" selection-end-line="127" selection-end-column="36" />
         </state>
       </provider>
     </entry>
