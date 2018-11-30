@@ -1,6 +1,7 @@
 var rawdb = require('../database/database');
 var async = require('async');
 var searchNum = 20;
+var sortmethod = require('../database/sort');
 
 function getNick(ptcp, threadID, userID, callback){
     ptcp.findOne({
@@ -176,9 +177,10 @@ getMsg = function(io, socket){
                 }
             },
             function(output, done){
-                if(output.length>0)
-                    io.to(socket.id).emit('getmsg', output);
-                else
+                if(output.length>0) {
+                    output_sort = output.sort(sortmethod.sortWithMessageIdUnique);
+                    io.to(socket.id).emit('getmsg', output_sort);
+                } else
                     io.to(socket.id).emit('alarm', {command: 'getmsg', msg: "err"});
             }, function(err){
                 if(err) console.log(err);

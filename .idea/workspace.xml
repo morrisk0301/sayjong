@@ -20,8 +20,8 @@
       <file leaf-file-name="route_chat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="524" column="45" selection-start-line="524" selection-start-column="45" selection-end-line="524" selection-end-column="45" />
+            <state relative-caret-position="89">
+              <caret line="208" column="63" lean-forward="true" selection-start-line="208" selection-start-column="63" selection-end-line="208" selection-end-column="63" />
             </state>
           </provider>
         </entry>
@@ -29,17 +29,8 @@
       <file leaf-file-name="sort.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/database/sort.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="693">
-              <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="route_user.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/route_user.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
+            <state relative-caret-position="256">
+              <caret line="49" column="20" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -53,29 +44,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="convertImage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/convertImage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="message.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/socketio/message.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+            <state relative-caret-position="130">
+              <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="getmsg.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="chat.ejs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/chat.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="25" column="84" selection-start-line="25" selection-start-column="84" selection-end-line="25" selection-end-column="84" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="getmsg.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/socketio/getmsg.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="162" column="20" lean-forward="true" selection-start-line="162" selection-start-column="20" selection-end-line="162" selection-end-column="20" />
+            <state relative-caret-position="147">
+              <caret line="181" column="65" lean-forward="true" selection-start-line="181" selection-start-column="65" selection-end-line="181" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -92,12 +83,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>paramIm</find>
-      <find>json</find>
-      <find>logout</find>
-      <find>1-7</find>
-      <find>withdr</find>
-      <find>withdrawl</find>
       <find>withdrawal</find>
       <find>채ㅜ</find>
       <find>check</find>
@@ -122,6 +107,12 @@
       <find>nickname</find>
       <find>ala</find>
       <find>alarm</find>
+      <find>sort</find>
+      <find>메ㅅ</find>
+      <find>emit('</find>
+      <find>text</find>
+      <find>result</find>
+      <find>type</find>
     </findStrings>
     <replaceStrings>
       <replace>pwd_hashed</replace>
@@ -139,7 +130,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/database/admin_schema.js" />
         <option value="$PROJECT_DIR$/database/notice_schema.js" />
         <option value="$PROJECT_DIR$/database/banner_schema.js" />
         <option value="$PROJECT_DIR$/views/admin_restriction.ejs" />
@@ -173,13 +163,9 @@
         <option value="$PROJECT_DIR$/database/desizeImage.js" />
         <option value="$PROJECT_DIR$/database/convertImage.js" />
         <option value="$PROJECT_DIR$/database/thread_schema.js" />
-        <option value="$PROJECT_DIR$/database/message_schema.js" />
-        <option value="$PROJECT_DIR$/socketio/message.js" />
-        <option value="$PROJECT_DIR$/socketio/image.js" />
         <option value="$PROJECT_DIR$/views/newchat.ejs" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/database/set_hot_chat.js" />
-        <option value="$PROJECT_DIR$/database/sort.js" />
         <option value="$PROJECT_DIR$/config/passport/local_login.js" />
         <option value="$PROJECT_DIR$/routes/route_temp.js" />
         <option value="$PROJECT_DIR$/database/set_hot_tag.js" />
@@ -189,7 +175,12 @@
         <option value="$PROJECT_DIR$/routes/route_admin.js" />
         <option value="$PROJECT_DIR$/routes/route_chat.js" />
         <option value="$PROJECT_DIR$/socketio/room.js" />
+        <option value="$PROJECT_DIR$/database/message_schema.js" />
+        <option value="$PROJECT_DIR$/socketio/image.js" />
+        <option value="$PROJECT_DIR$/database/sort.js" />
         <option value="$PROJECT_DIR$/socketio/getmsg.js" />
+        <option value="$PROJECT_DIR$/socketio/message.js" />
+        <option value="$PROJECT_DIR$/views/chat.ejs" />
       </list>
     </option>
   </component>
@@ -395,11 +386,12 @@
       <workItem from="1543296217090" duration="7166000" />
       <workItem from="1543384589508" duration="6377000" />
       <workItem from="1543536973604" duration="1842000" />
+      <workItem from="1543543351507" duration="2558000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="499987000" />
+    <option name="totallyTimeSpent" value="502545000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -614,20 +606,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/message_schema.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socketio/image.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="47" column="55" lean-forward="true" selection-start-line="47" selection-start-column="55" selection-end-line="47" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/newchat.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -726,31 +704,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/sort.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/socketio/socket.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="546">
           <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/chat.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1092">
-          <caret line="52" column="52" selection-start-line="52" selection-start-column="52" selection-end-line="52" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="524" column="45" selection-start-line="524" selection-start-column="45" selection-end-line="524" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -761,24 +718,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/database/message_schema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socketio/image.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1344">
+          <caret line="64" column="41" lean-forward="true" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/route_user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
+        <state relative-caret-position="256">
+          <caret line="98" column="37" lean-forward="true" selection-start-line="98" selection-start-column="37" selection-end-line="98" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/socketio/message.js">
+    <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        <state relative-caret-position="89">
+          <caret line="208" column="63" lean-forward="true" selection-start-line="208" selection-start-column="63" selection-end-line="208" selection-end-column="63" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/socketio/room.js">
+    <entry file="file://$PROJECT_DIR$/database/sort.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+        <state relative-caret-position="256">
+          <caret line="49" column="20" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socketio/getmsg.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="181" column="65" lean-forward="true" selection-start-line="181" selection-start-column="65" selection-end-line="181" selection-end-column="65" />
         </state>
       </provider>
     </entry>
@@ -789,10 +767,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/socketio/getmsg.js">
+    <entry file="file://$PROJECT_DIR$/socketio/room.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="162" column="20" lean-forward="true" selection-start-line="162" selection-start-column="20" selection-end-line="162" selection-end-column="20" />
+        <state relative-caret-position="84">
+          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socketio/message.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/chat.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="25" column="84" selection-start-line="25" selection-start-column="84" selection-end-line="25" selection-end-column="84" />
         </state>
       </provider>
     </entry>

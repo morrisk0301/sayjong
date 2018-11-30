@@ -7,6 +7,7 @@ Schema.createSchema = function(mongoose) {
         message_id_unique: {type:Number, required: true}
         , super_thread_id: {type: Number, required: true}
         , send_date: {type: Date, 'default': Date.now}
+        , send_date_string: {type: String, 'default': ''}
         , body: {type: String, 'default':''}
         , body_full: {type: String}
         , type: {type: String}

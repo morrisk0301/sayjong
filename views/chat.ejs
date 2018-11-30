@@ -23,7 +23,7 @@
                 println('웹소켓 서버에 연결되었습니다. : ' + url);
                 socket.on('message', function(message) {
                     console.log(JSON.stringify(message));
-                    if(message.type=='text') println('<p>'+ message.nickname + ' : ' + message.data + '</p>');
+                    if(message.type!='image') println('<p>'+ message.nickname +  ' , ' + message.type + ' : ' + message.data +'</p>');
                     else println('<p><img src="'+message.data+'"/></p>');
                 });
 
@@ -35,7 +35,7 @@
                 socket.on('getmsg', function(message) {
                     console.log(message);
                     for(var i=0;i<message.length;i++){
-                        if(message[i].type=='text') println('<p>'+ message[i].nickname + ' : ' + message[i].data + '</p>');
+                        if(message[i].type!='image') println('<p>'+ message[i].nickname + ' , ' + message[i].type + ' : ' + message[i].data + '</p>');
                         else if(message[i].type=='image') println('<p>'+ message[i].nickname + ' : <img src="'+message[i].data+'"/></p>');
                     }
                 });
@@ -96,8 +96,9 @@
                 var sender = '<%=user.user_id%>';
                 var recipient = $('#roomIdInput').val();
                 var data = $('#dataInput').val();
+                var type = $('#typeInput').val();
 
-                var output = {sender:sender, recipient:recipient, data:data};
+                var output = {sender:sender, recipient:recipient, data:data, type:type};
                 console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
 
                 if (socket == undefined) {
@@ -196,6 +197,14 @@
 <div>
     <div><span>방 아이디 :</span> <input type="text" id="roomIdInput"/><input type="button" id="joinButton" value="방 소켓 연결" /><input type="button" id="exitButton" value="방 소켓 헤제" /></div>
     <div><span>메시지 데이터 :</span> <input type="text" id="dataInput"/> </div>
+    <div><span>메시지 타입 :</span>
+        <select id="typeInput">
+            <option>text</option>
+            <option>in</option>
+            <option>out</option>
+            <option>daychange</option>
+        </select>
+    </div>
     <div><span>이미지 :</span> <input type="file" id="imageInput" accept="image/*"/> </div>
     <br>
     <input type="button" id="sendButton" value="전송" />

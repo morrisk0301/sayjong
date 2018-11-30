@@ -46,7 +46,8 @@ getImage = function(io, socket){
                         'body_full': result.img_full,
                         'type': 'image',
                         'sending_user_id': parseInt(image.sender),
-                        'expired_at': Date.now()
+                        'expired_at': Date.now(),
+                        'send_date_string': image.send_date_string
                     });
                     newimg.save(function(err, result){
                         if(err) console.log(err);
@@ -58,7 +59,8 @@ getImage = function(io, socket){
                             message_id: result.message_id,
                             nickname: image.nickname,
                             type: 'image',
-                            send_date: result.send_date
+                            send_date: result.send_date,
+                            send_date_string: result.send_date_string
                         });
                         console.log('저장 완료');
                     });

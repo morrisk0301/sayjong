@@ -48,15 +48,17 @@ message = function(io, socket){
                     'message_id_unique': id_count,
                     'super_thread_id': parseInt(message.recipient),
                     'body': message.data,
-                    'type': 'text',
+                    'type': message.type,
                     'sending_user_id': parseInt(message.sender),
+                    'send_date_string': message.send_date_string,
                     'expired_at': date
                 });
 
                 newmsg.save(function(err, result){
                     if(err) console.log(err);
-                    message.type="text";
+                    message.type=result.type;
                     message.send_date = result.send_date;
+                    message.send_date_string = result.send_date_string;
                     message.message_id = result.message_id;
                     io.in(message.recipient).emit('message', message);
                 });

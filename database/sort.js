@@ -38,4 +38,13 @@ sortWithCurrentCount = function(a, b){
     return 0;
 };
 
-module.exports = {sortWithIsHot, sortWithCreatedAt, sortWithCategoryCounter, sortWithCurrentCount, sortWithCategoryHot};
+sortWithMessageIdUnique = function(a, b){
+    if(a.message_id_unique < b.message_id_unique)
+        return -1;
+    if(a.message_id_unique > b.message_id_unique)
+        return 1;
+    return 0;
+};
+
+module.exports = {sortWithIsHot, sortWithCreatedAt, sortWithCategoryCounter, sortWithCurrentCount, sortWithCategoryHot,
+                    sortWithMessageIdUnique};
