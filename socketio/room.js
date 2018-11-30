@@ -11,13 +11,13 @@ room = function(io, socket){
             }, function(err, result){
                 if(err) console.log(err);
                 if(!result){
-                    var output = {command: 'join', msg: "내가 입장한 채팅방이 아닙니다."};
+                    var output = {command: 'join', msg: "err"};
                     io.to(socket.id).emit('alarm', output);
                 }
                 else{
                     socket.join(room.roomId);
 
-                    var output = {command: 'join', msg: "채팅방 소켓 접속 완료"};
+                    var output = {command: 'join', msg: "success"};
                     io.to(socket.id).emit('alarm', output);
                 }
             })
@@ -25,7 +25,7 @@ room = function(io, socket){
         else if (room.command === 'leave') {  // 방 나가기 요청
             socket.leave(room.roomId);
 
-            var output = {command: 'leave', msg: "채팅방 소켓 접속 해제 완료"};
+            var output = {command: 'leave', msg: "success"};
             io.to(socket.id).emit('alarm', output);
         }
     });

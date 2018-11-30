@@ -88,8 +88,8 @@ function searchMsgfromDB(msg, ptcp, threadID, searchTxt, msgId, callback){
 
             for(var i=searchcnt;i>=0;i--){
                 if(result[i].type=='text' && result[i].body.toLowerCase().includes(searchTxt.toLowerCase())){
-                    var startcnt = i-10>=0 ? i-10 : 0;
-                    var endcnt = i+10<=result.length? i+10 : result.length;
+                    var startcnt = i>=0 ? i : 0;
+                    var endcnt = i+20<=result.length? i+20 : result.length;
                     for(var j=startcnt;j<endcnt;j++){
                         var newval = {
                             'sender': result[j].sending_user_id,
@@ -106,6 +106,7 @@ function searchMsgfromDB(msg, ptcp, threadID, searchTxt, msgId, callback){
                     }
                     break;
                 }
+                //없으면 없다고 쏴주기
             }
 
             return callback(null, output);
@@ -128,7 +129,8 @@ getMsg = function(io, socket){
             function(done){
                 //thread_participant DB에서 유저, 채팅방 매칭 확인
                 ptcp.findOne({'super_thread_id': msgQuery.roomId, 'super_user_id': msgQuery.sender}, function(err, result){
-                    if(!result) return;
+                    if(!result)
+                        return io.to(socket.id).emit('alarm', {command: 'getmsg', msg: "err"});
                     else done(null);
                 })
             },
@@ -174,7 +176,10 @@ getMsg = function(io, socket){
                 }
             },
             function(output, done){
-                io.to(socket.id).emit('getmsg', output);
+                if(output.length>0)
+                    io.to(socket.id).emit('getmsg', output);
+                else
+                    io.to(socket.id).emit('alarm', {command: 'getmsg', msg: "err"});
             }, function(err){
                 if(err) console.log(err);
             }

@@ -516,6 +516,18 @@ module.exports = function(router) {
             res.json({threadlist:threadlist});
         })
     });
+
+    router.get('/getNickname', check_login, function(req, res) {
+        console.log('getNickname get 요청');
+        var database = req.app.get('database');
+        database.ThreadParticipantModel_sj.findOne({
+            'super_thread_id': req.query.thread_id,
+            'super_user_id': req.user.user_id
+        }, function(err, result){
+            if(err) throw err;
+            res.json({nickname: result.nickname})
+        })
+    });
     
     //edit chat는 1차 출시에서 빠짐
     router.post('/editchat', check_login, function(req, res){
