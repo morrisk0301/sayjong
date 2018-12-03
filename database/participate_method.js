@@ -3,6 +3,21 @@ var getNickname = require('./nickname');
 
  participate_thread = function(thread_id, user_id, database, callback){
     async.waterfall([
+        function(done){
+            database.ThreadParticipantModel_sj.find({
+                'super_thread_id': thread_id
+            }, function(err, result){
+                if(err) throw err;
+                if(!result) done(null);
+                database.ThreadModel_sj.findOne({
+                    'thread_id': thread_id
+                }, function(err, thread_result){
+                    if(err) throw err;
+                    if(result.length>=thread_result.thread_n_people) return callback("채팅방 최대인원이 초과하였습니다.", null);
+                    else done(null);
+                })
+            })
+        },
         function(done) {
             database.ThreadParticipantModel_sj.findOne({
                 'super_thread_id': thread_id,
@@ -11,7 +26,7 @@ var getNickname = require('./nickname');
                 if(err) return callback(err);
                 if(result){
                     console.log('이미 Thread Participant DB에 등록되어 있음');
-                    return callback('이미 Thread Participant DB에 등록되어 있음');
+                    return callback('이미 참여중인 채팅방입니다.');
                 }
                 else done(null)
             })

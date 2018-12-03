@@ -212,7 +212,7 @@ getMsg = function(io, socket){
                 }
                 else if(msgQuery.command=='get'){
                     getMsgfromDB(msg, ptcp, msgQuery.roomId, msgQuery.msg_idx_start, msgQuery.msg_idx_end, function(err, result){
-                        done(null, {query:msgQuery.updown, chat:result.sort(sortmethod.sortWithMessageIdUnique)});
+                        done(null, {query:'get_'+msgQuery.updown, chat:result.sort(sortmethod.sortWithMessageIdUnique)});
                     });
                 }
                 else if(msgQuery.command=='search_up') {

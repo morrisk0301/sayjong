@@ -47,35 +47,26 @@
       <file leaf-file-name="route_chat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3671">
-              <caret line="387" column="27" lean-forward="true" selection-start-line="387" selection-start-column="27" selection-end-line="387" selection-end-column="27" />
+            <state relative-caret-position="84">
+              <caret line="399" column="23" lean-forward="true" selection-start-line="399" selection-start-column="23" selection-end-line="399" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chat.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/chat.ejs">
+      <file leaf-file-name="participate_method.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/database/participate_method.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="36" column="39" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
+            <state relative-caret-position="42">
+              <caret line="15" column="104" selection-start-line="15" selection-start-column="104" selection-end-line="15" selection-end-column="104" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin_ban_edit.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/admin_ban_edit.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="73" column="39" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="getmsg.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="getmsg.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/socketio/getmsg.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="126">
-              <caret line="238" column="58" lean-forward="true" selection-start-line="238" selection-start-column="58" selection-end-line="238" selection-end-column="58" />
+              <caret line="212" column="49" lean-forward="true" selection-start-line="212" selection-start-column="49" selection-end-line="212" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -92,10 +83,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>waterfal</find>
-      <find>exec</find>
-      <find>id:</find>
-      <find>socket.em</find>
       <find>shingo</find>
       <find>getn</find>
       <find>nickname</find>
@@ -122,6 +109,10 @@
       <find>init</find>
       <find>command</find>
       <find>on('ge</find>
+      <find>jointhre</find>
+      <find>participate_thread</find>
+      <find>jointh</find>
+      <find>call</find>
     </findStrings>
     <replaceStrings>
       <replace>pwd_hashed</replace>
@@ -139,7 +130,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/database/banner_schema.js" />
         <option value="$PROJECT_DIR$/views/admin_restriction.ejs" />
         <option value="$PROJECT_DIR$/database/shingo_schema.js" />
         <option value="$PROJECT_DIR$/views/admin_pwreset.ejs" />
@@ -177,7 +167,6 @@
         <option value="$PROJECT_DIR$/views/withdrawal.ejs" />
         <option value="$PROJECT_DIR$/routes/route_forgot.js" />
         <option value="$PROJECT_DIR$/routes/route_user.js" />
-        <option value="$PROJECT_DIR$/routes/route_chat.js" />
         <option value="$PROJECT_DIR$/socketio/room.js" />
         <option value="$PROJECT_DIR$/database/message_schema.js" />
         <option value="$PROJECT_DIR$/socketio/image.js" />
@@ -190,6 +179,8 @@
         <option value="$PROJECT_DIR$/database/defaultThreadImage.js" />
         <option value="$PROJECT_DIR$/views/chat.ejs" />
         <option value="$PROJECT_DIR$/socketio/getmsg.js" />
+        <option value="$PROJECT_DIR$/routes/route_chat.js" />
+        <option value="$PROJECT_DIR$/database/participate_method.js" />
       </list>
     </option>
   </component>
@@ -397,12 +388,12 @@
       <workItem from="1543536973604" duration="1842000" />
       <workItem from="1543543351507" duration="4765000" />
       <workItem from="1543586177831" duration="360000" />
-      <workItem from="1543822527817" duration="8449000" />
+      <workItem from="1543822527817" duration="11211000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="513561000" />
+    <option name="totallyTimeSpent" value="516323000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -559,13 +550,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-332">
           <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/participate_method.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="172" column="76" lean-forward="true" selection-start-line="172" selection-start-column="76" selection-end-line="172" selection-end-column="76" />
         </state>
       </provider>
     </entry>
@@ -766,13 +750,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/route_admin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="472" column="38" lean-forward="true" selection-start-line="472" selection-start-column="38" selection-end-line="472" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/defaultThreadImage.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -787,17 +764,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
+    <entry file="file://$PROJECT_DIR$/routes/route_admin.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3671">
-          <caret line="387" column="27" lean-forward="true" selection-start-line="387" selection-start-column="27" selection-end-line="387" selection-end-column="27" />
+        <state relative-caret-position="21">
+          <caret line="472" column="38" lean-forward="true" selection-start-line="472" selection-start-column="38" selection-end-line="472" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/socketio/getmsg.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
-          <caret line="238" column="58" lean-forward="true" selection-start-line="238" selection-start-column="58" selection-end-line="238" selection-end-column="58" />
+          <caret line="212" column="49" lean-forward="true" selection-start-line="212" selection-start-column="49" selection-end-line="212" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/route_chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="399" column="23" lean-forward="true" selection-start-line="399" selection-start-column="23" selection-end-line="399" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/participate_method.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="15" column="104" selection-start-line="15" selection-start-column="104" selection-end-line="15" selection-end-column="104" />
         </state>
       </provider>
     </entry>
