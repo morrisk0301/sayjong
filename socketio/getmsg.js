@@ -29,7 +29,6 @@ function initMsgfromDB(msg, ptcp, threadID, callback){
                     'sender': result[i].sending_user_id,
                     'recipient': threadID,
                     'data': result[i].body,
-                    //'message_id_unique': result.length-1-result[i].message_id_unique,
                     'message_id_unique': result[i].message_id_unique,
                     'message_id': result[i].message_id,
                     'type': result[i].type,
@@ -61,7 +60,6 @@ function getMsgfromDB(msg, ptcp, threadID, msgStartId, msgEndId, callback){
                     'sender': result[i].sending_user_id,
                     'recipient': threadID,
                     'data': result[i].body,
-                    //'message_id_unique': result.length-1-result[i].message_id_unique,
                     'message_id_unique': result[i].message_id_unique,
                     'message_id': result[i].message_id,
                     'type': result[i].type,
@@ -98,7 +96,6 @@ function searchUpMsgfromDB(msg, ptcp, threadID, searchTxt, msgId, callback){
                             'sender': result[j].sending_user_id,
                             'recipient': threadID,
                             'data': result[j].body,
-                            //'message_id_unique': result.length-1-result[j].message_id_unique,
                             'message_id_unique': result[j].message_id_unique,
                             'message_id': result[j].message_id,
                             'type': result[j].type,
@@ -173,17 +170,17 @@ getMsg = function(io, socket){
                 //thread_participant DB에서 유저, 채팅방 매칭 확인
                 ptcp.findOne({'super_thread_id': msgQuery.roomId, 'super_user_id': msgQuery.sender}, function(err, result){
                     if(!result)
-                        return io.to(socket.id).emit('getmsg', {
-                            'sender': null,
-                            'recipient': null,
-                            'data': null,
-                            'message_id_unique': null,
-                            'message_id': null,
-                            'type': null,
-                            'send_date': null,
-                            'send_date_string': null,
-                            'nickname': null
-                        });
+                        return io.to(socket.id).emit('getmsg', {query: msgQuery.command, chat:[{
+                                'sender': null,
+                                'recipient': null,
+                                'data': null,
+                                'message_id_unique': null,
+                                'message_id': null,
+                                'type': null,
+                                'send_date': null,
+                                'send_date_string': null,
+                                'nickname': null
+                            }]});
                     else done(null);
                 })
             },
@@ -202,7 +199,7 @@ getMsg = function(io, socket){
                             'send_date': Date.now(),
                             'nickname': '관리자'
                         }];
-                        return io.to(socket.id).emit('getmsg', output);
+                        return io.to(socket.id).emit('getmsg', {query:msgQuery.command, chat:output});
                     }
                     else done(null);
                 })
@@ -210,12 +207,12 @@ getMsg = function(io, socket){
             function(done){
                 if(msgQuery.command=='init'){
                     initMsgfromDB(msg, ptcp, msgQuery.roomId, function(err, result){
-                        done(null, result);
+                        done(null, {query:msgQuery.command, chat:result.sort(sortmethod.sortWithMessageIdUnique)});
                     });
                 }
                 else if(msgQuery.command=='get'){
                     getMsgfromDB(msg, ptcp, msgQuery.roomId, msgQuery.msg_idx_start, msgQuery.msg_idx_end, function(err, result){
-                        done(null, result);
+                        done(null, {query:msgQuery.updown, chat:result.sort(sortmethod.sortWithMessageIdUnique)});
                     });
                 }
                 else if(msgQuery.command=='search_up') {
@@ -224,7 +221,7 @@ getMsg = function(io, socket){
                             console.log(err);
                             return;
                         }
-                        done(null, result);
+                        done(null, {query:msgQuery.command, chat:result.sort(sortmethod.sortWithMessageIdUnique)});
                     })
                 }
                 else if(msgQuery.command=='search_down') {
@@ -233,16 +230,15 @@ getMsg = function(io, socket){
                             console.log(err);
                             return;
                         }
-                        done(null, result);
+                        done(null, {query:msgQuery.command, chat:result.sort(sortmethod.sortWithMessageIdUnique)});
                     })
                 }
             },
             function(output, done){
-                if(output.length>0) {
-                    output_sort = output.sort(sortmethod.sortWithMessageIdUnique);
-                    io.to(socket.id).emit('getmsg', output_sort);
-                } else
-                    return io.to(socket.id).emit('getmsg', {
+                if(output.chat.length>0)
+                    io.to(socket.id).emit('getmsg', output);
+                else
+                    return io.to(socket.id).emit('getmsg', {query: msgQuery.command, chat:[{
                         'sender': null,
                         'recipient': null,
                         'data': null,
@@ -252,7 +248,7 @@ getMsg = function(io, socket){
                         'send_date': null,
                         'send_date_string': null,
                         'nickname': null
-                    });
+                    }]});
             }, function(err){
                 if(err) console.log(err);
             }

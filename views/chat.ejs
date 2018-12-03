@@ -32,7 +32,8 @@
                     println('<p>'+ message.command + ' : ' + message.msg + '</p>');
                 })
 
-                socket.on('getmsg', function(message) {
+                socket.on('getmsg', function(data) {
+                    message = data.chat
                     console.log(message);
                     for(var i=0;i<message.length;i++){
                         if(message[i].type!='image') println('<p>'+ message[i].nickname + ' , ' + message[i].type + ' : ' + message[i].data + '</p>');
