@@ -11,6 +11,8 @@ Schema.createSchema = function(mongoose) {
         , ban_nickname: {type:String}
         , ban_body: {type:String, 'default':''}
         , ban_img: {type:String, 'default':''}
+        , ban_img2: {type:String, 'default':''}
+        , ban_img3: {type:String, 'default':''}
         , ban_email: {type:String}
         , ban_result: {type:String}
         , ban_days: {type:Number}

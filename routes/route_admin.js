@@ -203,7 +203,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_ban_thread_info', check_auth, function(req, res){
-        console.log('/admin_ban_thread 호출됨.');
+        console.log('/admin_ban_thread 호출됨.', req.body);
         var database = req.app.get("database");
         database.ThreadBanModel_sj.findOne({
             'thread_id': req.body.thread_id
@@ -214,7 +214,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_register', check_auth, function(req, res){
-        console.log('/admin_register Post 호출됨.');
+        console.log('/admin_register Post 호출됨.', req.body);
         var paramEmail = req.body.email;
         var paramNickname = req.body.nickname;
         var database = req.app.get('database');
@@ -276,7 +276,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_delete', check_auth, function(req, res){
-        console.log('admin_delete 호출 됨');
+        console.log('admin_delete 호출 됨', req.body);
         var paramId = req.body.admin_id;
         var database = req.app.get('database');
         database.AdminModel_sj.findOne({
@@ -301,7 +301,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_pwreset', check_auth, function(req, res){
-        console.log('admin_pwreset 호출됨');
+        console.log('admin_pwreset 호출됨', req.body);
         var database = req.app.get('database');
         var randomPW = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
         database.UserModel_sj.findOne({
@@ -333,7 +333,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_notice_add', check_auth, function(req, res) {
-        console.log('admin_notice_add 호출됨');
+        console.log('admin_notice_add 호출됨', req.body);
         var database = req.app.get('database');
         var paramHead = req.body.notice_head;
         var paramBody = req.body.notice_body;
@@ -356,7 +356,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_notice_delete', check_auth, function(req, res) {
-        console.log('admin_notice_delete 호출됨');
+        console.log('admin_notice_delete 호출됨', req.body);
         var database = req.app.get('database');
         database.NoticeModel_sj.find({
             'notice_id': req.body.notice_id
@@ -369,7 +369,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_notice_edit', check_auth, function(req, res) {
-        console.log('admin_notice_edit 호출됨');
+        console.log('admin_notice_edit 호출됨', req.body);
         var database = req.app.get('database');
         var paramHead = req.body.notice_head;
         var paramBody = req.body.notice_body;
@@ -396,7 +396,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_banner_add', check_auth, function(req, res) {
-        console.log('admin_banner_add 호출됨');
+        console.log('admin_banner_add 호출됨', req.body);
         var database = req.app.get('database');
         convertImage(req.body.banner_img, function(err, paramImage){
             database.AdminModel_sj.findOne({
@@ -420,7 +420,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_banner_delete', check_auth, function(req, res) {
-        console.log('admin_banner_delete 호출됨');
+        console.log('admin_banner_delete 호출됨', req.body);
         var database = req.app.get('database');
         database.BannerModel_sj.find({
             'banner_id': req.body.banner_id
@@ -433,7 +433,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_banner_edit', check_auth, function(req, res) {
-        console.log('admin_banner_edit 호출됨');
+        console.log('admin_banner_edit 호출됨', req.body);
         var database = req.app.get('database');
         database.AdminModel_sj.findOne({
             'email':req.user.email
@@ -461,26 +461,47 @@ module.exports = function(router) {
     });
 
     router.post('/admin_ban_add', check_auth, function(req, res) {
-        console.log('admin_ban_add 호출됨');
+        console.log('admin_ban_add 호출됨', req.body);
         var database = req.app.get('database');
-        convertImage(req.body.ban_img, function(err, paramImage){
-            var newBan = new database.BanModel_sj({
-                'ban_thread_id': req.body.ban_thread_id,
-                'shingo_email': req.body.shingo_email,
-                'ban_reason': req.body.ban_reason,
-                'ban_nickname': req.body.nickname,
-                'ban_body': req.body.ban_body,
-                'ban_img': paramImage.img_full
-            });
-            newBan.save(function(err){
+        async.waterfall([
+            function(done){
+                convertImage(req.body.ban_img, function(err, paramImage){
+                    if(err) throw err;
+                    done(null, paramImage);
+                })
+            },
+            function(paramImage, done){
+                convertImage(req.body.ban_img2, function(err, paramImage2){
+                    if(err) throw err;
+                    done(null, paramImage, paramImage2);
+                })
+            },
+            function(paramImage, paramImage2, done){
+                convertImage(req.body.ban_img3, function(err, paramImage3){
+                    if(err) throw err;
+                    var newBan = new database.BanModel_sj({
+                        'ban_thread_id': req.body.ban_thread_id,
+                        'shingo_email': req.body.shingo_email,
+                        'ban_reason': req.body.ban_reason,
+                        'ban_nickname': req.body.nickname,
+                        'ban_body': req.body.ban_body,
+                        'ban_img': paramImage.img_full,
+                        'ban_img2': paramImage2.img_full,
+                        'ban_img3': paramImage3.img_full
+                    });
+                    newBan.save(function(err){
+                        if(err) throw err;
+                        res.json({banstatus: true});
+                    })
+                })
+            }, function(err, result){
                 if(err) throw err;
-                res.json({banstatus: true});
-            })
-        });
+            }
+        ]);
     });
 
     router.post('/admin_ban_edit', check_auth, function(req, res) {
-        console.log('admin_ban_edit 호출됨');
+        console.log('admin_ban_edit 호출됨', req.body);
         var database = req.app.get('database');
         var date = new Date();
         var paramDays = req.body.ban_days!="영구" ? req.body.ban_days : 36500;
@@ -532,7 +553,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_getchat', check_auth, function(req, res) {
-        console.log('admin_getchat 호출됨');
+        console.log('admin_getchat 호출됨', req.body);
         var database = req.app.get('database');
         database.MessageModel_sj.find({
             'super_thread_id': req.body.thread_id
@@ -543,7 +564,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_user_ban', check_auth, function(req, res) {
-        console.log('admin_getchat 호출됨');
+        console.log('admin_getchat 호출됨', req.body);
         var database = req.app.get('database');
         var date = new Date();
         var paramDays = req.body.ban_days!="영구" ? req.body.ban_days : 36500;
@@ -563,7 +584,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_user_ban_delete', check_auth, function(req, res) {
-        console.log('admin_user_ban_delete 호출됨');
+        console.log('admin_user_ban_delete 호출됨', req.body);
         var database = req.app.get('database');
         database.UserBanModel_sj.find({
             'user_ban_id': req.body.user_ban_id
@@ -576,7 +597,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_thread_ban', check_auth, function(req, res) {
-        console.log('admin_thread_ban 호출됨');
+        console.log('admin_thread_ban 호출됨', req.body);
         var database = req.app.get('database');
 
         database.ThreadModel_sj.findOne({

@@ -33,9 +33,15 @@
 			</select><br><br>
 			<label>신고 내용</label><br>
 			<textarea name="ban_body" cols="100" rows="10"></textarea><br><br>
-			<label>스크린 샷</label><br>
+			<label>스크린 샷1</label><br>
 			<input type="file" id="img_input" accept="image/*"><br>
 			<input type="hidden" value="" name="ban_img" id="ban_img"/><br><br>
+			<label>스크린 샷2</label><br>
+			<input type="file" id="img_input2" accept="image/*"><br>
+			<input type="hidden" value="" name="ban_img2" id="ban_img2"/><br><br>
+			<label>스크린 샷3</label><br>
+			<input type="file" id="img_input3" accept="image/*"><br>
+			<input type="hidden" value="" name="ban_img3" id="ban_img3"/><br><br>
 			<input type="submit" value="신고하기"/>
 		</form>
 	</div>
@@ -48,6 +54,24 @@
         fileReader.readAsDataURL(this.files[0]);
         fileReader.onload = function(e){
             $('#ban_img').attr('value', e.target.result);
+            console.log(e.target.result);
+        };
+    });
+    $("#img_input2").on('change', function(event){
+        var fileReader;
+        fileReader = new FileReader();
+        fileReader.readAsDataURL(this.files[0]);
+        fileReader.onload = function(e){
+            $('#ban_img2').attr('value', e.target.result);
+            console.log(e.target.result);
+        };
+    });
+    $("#img_input3").on('change', function(event){
+        var fileReader;
+        fileReader = new FileReader();
+        fileReader.readAsDataURL(this.files[0]);
+        fileReader.onload = function(e){
+            $('#ban_img3').attr('value', e.target.result);
             console.log(e.target.result);
         };
     });

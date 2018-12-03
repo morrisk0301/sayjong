@@ -34,6 +34,7 @@ function initMsgfromDB(msg, ptcp, threadID, callback){
                     'message_id': result[i].message_id,
                     'type': result[i].type,
                     'send_date': result[i].send_date,
+                    'send_date_string': result[i].send_date_string,
                     'nickname': resultNick[i]
                 };
                 output.push(newval);
@@ -65,6 +66,7 @@ function getMsgfromDB(msg, ptcp, threadID, msgStartId, msgEndId, callback){
                     'message_id': result[i].message_id,
                     'type': result[i].type,
                     'send_date': result[i].send_date,
+                    'send_date_string': result[i].send_date_string,
                     'nickname': resultNick[i]
                 };
                 output.push(newval);
@@ -97,10 +99,11 @@ function searchMsgfromDB(msg, ptcp, threadID, searchTxt, msgId, callback){
                             'recipient': threadID,
                             'data': result[j].body,
                             //'message_id_unique': result.length-1-result[j].message_id_unique,
-                            'message_id_unique': result[i].message_id_unique,
-                            'message_id': result[i].message_id,
+                            'message_id_unique': result[j].message_id_unique,
+                            'message_id': result[j].message_id,
                             'type': result[j].type,
                             'send_date': result[j].send_date,
+                            'send_date_string': result[j].send_date_string,
                             'nickname': resultNick[j]
                         };
                         output.push(newval);
