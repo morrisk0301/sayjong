@@ -161,7 +161,12 @@
                 var sender = '<%=user.user_id%>';
                 var searchtxt = $('#searchText').val();
                 var searchId = $('#searchId').val();
-                var msgquery ={command: 'search', roomId: roomId, sender:sender, searchtxt: searchtxt, searchId: searchId}
+                var msgquery;
+                if($("#search_option").val()=='up')
+                    msgquery ={command: 'search_up', roomId: roomId, sender:sender, searchtxt: searchtxt, searchId: searchId}
+                else
+                    msgquery ={command: 'search_down', roomId: roomId, sender:sender, searchtxt: searchtxt, searchId: searchId}
+
                 socket.emit('getmsg', msgquery);
             })
         });
@@ -221,6 +226,10 @@
     <input type="text" id="searchText"/>
     <a>검색 번호</a>
     <input type="Number" id="searchId"/>
+    <select id="search_option">
+        <option>up</option>
+        <option>down</option>
+    </select>
     <input type="button" id="searchButton" value="검색"/>
 </div>
 

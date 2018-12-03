@@ -76,7 +76,7 @@ function getMsgfromDB(msg, ptcp, threadID, msgStartId, msgEndId, callback){
     })
 }
 
-function searchMsgfromDB(msg, ptcp, threadID, searchTxt, msgId, callback){
+function searchUpMsgfromDB(msg, ptcp, threadID, searchTxt, msgId, callback){
     if(searchTxt.length<2) return callback('Less than 2 letters', null);
     msg.find({'super_thread_id': threadID}, function(err, result){
         var output = [];
@@ -110,7 +110,46 @@ function searchMsgfromDB(msg, ptcp, threadID, searchTxt, msgId, callback){
                     }
                     break;
                 }
-                //없으면 없다고 쏴주기
+            }
+
+            return callback(null, output);
+        })
+    });
+}
+
+function searchDownMsgfromDB(msg, ptcp, threadID, searchTxt, msgId, callback){
+    if(searchTxt.length<2) return callback('Less than 2 letters', null);
+    msg.find({'super_thread_id': threadID}, function(err, result){
+        var output = [];
+        var searchcnt = msgId>=0 && msgId<=result.length ? msgId : 0;
+
+        async.map(result, function(item, callback){
+            getNick(ptcp, threadID, item.sending_user_id, function(nick){
+                callback(null, nick);
+            })
+        }, function(err, resultNick){
+            if(err) throw err;
+
+            for(var i=searchcnt;i<result.length;i++){
+                if(result[i].type=='text' && result[i].body.toLowerCase().includes(searchTxt.toLowerCase())){
+                    var startcnt = i>=0 ? i : 0;
+                    var endcnt = i+20<=result.length? i+20 : result.length;
+                    for(var j=startcnt;j<endcnt;j++){
+                        var newval = {
+                            'sender': result[j].sending_user_id,
+                            'recipient': threadID,
+                            'data': result[j].body,
+                            'message_id_unique': result[j].message_id_unique,
+                            'message_id': result[j].message_id,
+                            'type': result[j].type,
+                            'send_date': result[j].send_date,
+                            'send_date_string': result[j].send_date_string,
+                            'nickname': resultNick[j]
+                        };
+                        output.push(newval);
+                    }
+                    break;
+                }
             }
 
             return callback(null, output);
@@ -134,7 +173,17 @@ getMsg = function(io, socket){
                 //thread_participant DB에서 유저, 채팅방 매칭 확인
                 ptcp.findOne({'super_thread_id': msgQuery.roomId, 'super_user_id': msgQuery.sender}, function(err, result){
                     if(!result)
-                        return io.to(socket.id).emit('alarm', {command: 'getmsg', msg: "err"});
+                        return io.to(socket.id).emit('getmsg', {
+                            'sender': null,
+                            'recipient': null,
+                            'data': null,
+                            'message_id_unique': null,
+                            'message_id': null,
+                            'type': null,
+                            'send_date': null,
+                            'send_date_string': null,
+                            'nickname': null
+                        });
                     else done(null);
                 })
             },
@@ -169,8 +218,17 @@ getMsg = function(io, socket){
                         done(null, result);
                     });
                 }
-                else if(msgQuery.command=='search') {
-                    searchMsgfromDB(msg, ptcp, msgQuery.roomId, msgQuery.searchtxt, msgQuery.searchId, function(err, result){
+                else if(msgQuery.command=='search_up') {
+                    searchUpMsgfromDB(msg, ptcp, msgQuery.roomId, msgQuery.searchtxt, msgQuery.searchId, function(err, result){
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        done(null, result);
+                    })
+                }
+                else if(msgQuery.command=='search_down') {
+                    searchDownMsgfromDB(msg, ptcp, msgQuery.roomId, msgQuery.searchtxt, msgQuery.searchId, function(err, result){
                         if(err){
                             console.log(err);
                             return;
@@ -184,7 +242,17 @@ getMsg = function(io, socket){
                     output_sort = output.sort(sortmethod.sortWithMessageIdUnique);
                     io.to(socket.id).emit('getmsg', output_sort);
                 } else
-                    io.to(socket.id).emit('alarm', {command: 'getmsg', msg: "err"});
+                    return io.to(socket.id).emit('getmsg', {
+                        'sender': null,
+                        'recipient': null,
+                        'data': null,
+                        'message_id_unique': null,
+                        'message_id': null,
+                        'type': null,
+                        'send_date': null,
+                        'send_date_string': null,
+                        'nickname': null
+                    });
             }, function(err){
                 if(err) console.log(err);
             }
