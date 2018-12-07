@@ -7,7 +7,7 @@ module.exports = function(router) {
     //비밀번호 되찾기
 
     router.route('/forgot').post(function(req, res, next){
-        console.log('forgot post 요청', req.body);
+        console.log('forgot post 요청');
         async.waterfall([
             function(done) {
                 crypto.randomBytes(20, function(err, buf) {
@@ -65,7 +65,7 @@ module.exports = function(router) {
     });
 
     router.route('/reset/:token').get(function(req, res) {
-        console.log('reset get 요청', req.params);
+        console.log('reset get 요청');
         var database = req.app.get('database');
         database.UserModel_sj.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
             if(err) throw err;
@@ -81,7 +81,7 @@ module.exports = function(router) {
 
     //router.route('/reset/:token').post(function(req, res){
     router.route('/reset').post(function(req, res){
-        console.log('reset post 요청', req.body);
+        console.log('reset post 요청');
         var token = req.body.token;
         async.waterfall([
             function(done) {
@@ -130,7 +130,6 @@ module.exports = function(router) {
             }
         ], function(err, user) {
             if(err){
-                console.log(err);
                 res.render('complete_reset', {resetstatus: false});
             }
             else{

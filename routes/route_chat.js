@@ -59,12 +59,10 @@ module.exports = function(router) {
                 var threadlist = [];
 
                 async.map(result, function(item, callback){
-                    console.log(item);
                     database.ThreadModel_sj.findOne({
                         'thread_id': item.super_thread_id
                     }, function(err, thread_result){
                         if(err) throw err;
-                        console.log(thread_result);
                         callback(null, thread_result)
                     })
                 }, function(err, threadArr){
@@ -325,7 +323,7 @@ module.exports = function(router) {
     });
 
     router.post('/newchat', check_login, function(req, res) {
-        console.log('newchat post요청', req.body);
+        console.log('newchat post요청');
         if(!req.body.thread_name) res.json({errmessage: "채팅방 이름이 입력되지 않았습니다."});
         else{
             var paramName = req.body.thread_name;
@@ -388,7 +386,7 @@ module.exports = function(router) {
     });
 
     router.post('/jointhread', check_login, function(req, res) {
-        console.log('jointhread post요청', req.body);
+        console.log('jointhread post요청');
         var paramID = req.body.roomID;
         var paramPW = req.body.roomPW;
         var database = req.app.get('database');
@@ -419,7 +417,7 @@ module.exports = function(router) {
     });
 
     router.post('/leavethread', check_login, function(req, res) {
-        console.log('leavethread post요청', req.body);
+        console.log('leavethread post요청');
         var paramID = req.body.roomID;
         var database = req.app.get('database');
         database.ThreadModel_sj.findOne({
@@ -453,14 +451,14 @@ module.exports = function(router) {
     });
 
     router.get('/searchThread/:TEXT', check_login, function(req, res) {
-        console.log('searchThread get 요청', req.params);
+        console.log('searchThread get 요청');
         var paramText = req.params.TEXT;
         var database = req.app.get('database');
         async.waterfall([
             function(done){
                 var output_cat = [];
                 database.CategoryModel_sj.findOne({
-                    'category_name': paramText
+                    'category_name': {$regex : new RegExp(paramText, "i")}
                 }, function (err, cat_result) {
                     if(err) throw err;
                     if(!cat_result) done(null, null);
@@ -515,7 +513,7 @@ module.exports = function(router) {
     });
 
     router.get('/searchThreadbyCatId/:ID', check_login, function(req, res) {
-        console.log('searchThreadbyCatId get 요청', req.params);
+        console.log('searchThreadbyCatId get 요청');
         var paramId = req.params.ID;
         var database = req.app.get('database');
         searchThreacbyCatid(paramId, database, function(err, threadlist){
@@ -534,10 +532,44 @@ module.exports = function(router) {
             res.json({nickname: result.nickname})
         })
     });
+
+    router.get('/getThreadInfo', check_login, function(req, res) {
+        console.log('getThreadInfo get 요청');
+        var database = req.app.get('database');
+        var search_thread_id = req.query.thread_id;
+        database.ThreadModel_sj.findOne({
+            'thread_id':search_thread_id
+        }, function(err, result){
+            if(err) throw err;
+            if(!result) res.json({errmessage:"no thread"});
+            else {
+                getClientNum(search_thread_id, database, function (result_cli) {
+                    getCategory(search_thread_id, database, function (result_cat) {
+                        var thread_info = {
+                            'cli': result_cli,
+                            'cat': result_cat,
+                            'key': result.thread_id,
+                            'thread_name': result.thread_name,
+                            'is_open': result.is_open,
+                            'is_use_realname': result.is_use_realname,
+                            'thread_n_people': result.thread_n_people,
+                            'thread_superuser_id': result.thread_superuser_id,
+                            'thread_time': result.thread_time,
+                            'thread_about': result.thread_about,
+                            'thread_img': result.thread_img,
+                            'client_num': result_cli,
+                            'tag': result_cat
+                        };
+                        res.json({thread_info});
+                    });
+                })
+            }
+        })
+    });
     
     //edit chat는 1차 출시에서 빠짐
     router.post('/editchat', check_login, function(req, res){
-        console.log('editChat post 요청', req.body);
+        console.log('editChat post 요청');
         var paramId = req.body.thread_id;
         var paramPassword = req.body.password ? req.body.password : '';
         var paramPeople = req.body.thread_n_people;

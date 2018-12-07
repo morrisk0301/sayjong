@@ -4,7 +4,7 @@ module.exports = function(router, passport) {
     var async = require('async');
     // 로그인 인증
     router.post('/login', function(req, res){
-        console.log("로그인 포스트 요청", req.body);
+        console.log("로그인 포스트 요청");
         var MongoClient =require('mongodb').MongoClient;
         var url = "mongodb://localhost:27017/";
         if(req.body.email == '' || req.body.password=='') return res.json({msg: "1-4"});
@@ -61,7 +61,7 @@ module.exports = function(router, passport) {
 
     //회원가입시 이메일 인증
     router.post('/signup', function(req, res, next){
-        console.log("회원가입 post 요청", req.body);
+        console.log("회원가입 post 요청");
         if(req.body.email=='' || !req.body.email) return res.json({msg: "2-1"});
         else if(!req.body.email.includes('sju.ac.kr')) return res.json({msg: "2-2"});
         else if(req.body.password=='' || !req.body.password) return res.json({msg: "2-3"});
@@ -77,7 +77,7 @@ module.exports = function(router, passport) {
     });
 
     router.get('/email-verification/:URL', function(req, res){
-        console.log('이메일 인증 get 요청', req.params);
+        console.log('이메일 인증 get 요청');
         var nev = require('../config/email_verification');
         var url = req.params.URL;
         nev.confirmTempUser(url, function(err, user){
@@ -94,7 +94,7 @@ module.exports = function(router, passport) {
     });
 
     router.get('/resendVerificationEmail/:EMAIL', function(req, res){
-        console.log('이메일 재인증 get 요청', req.params);
+        console.log('이메일 재인증 get 요청');
         var nev = require('../config/email_verification');
         var email = req.params.EMAIL;
         nev.resendVerificationEmail(email, function(err, userFound){
@@ -105,7 +105,7 @@ module.exports = function(router, passport) {
     });
 
     router.post('/withdrawal', function(req, res){
-        console.log('withdrawal post 요청', req.body);
+        console.log('withdrawal post 요청');
         var database = req.app.get('database');
         async.waterfall([
             function(done){
@@ -117,6 +117,14 @@ module.exports = function(router, passport) {
                         if(err) throw err;
                         done(null, result.user_id)
                     })
+                })
+            },
+            function(user_id, done){
+                database.ThreadParticipantModel_sj.find({
+                    'super_user_id': user_id
+                }).remove(function(err){
+                    if(err) throw err;
+                    done(null, user_id);
                 })
             },
             function(user_id, done){

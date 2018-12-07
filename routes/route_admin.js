@@ -20,7 +20,7 @@ module.exports = function(router) {
     };
 
     router.route('/').get(function(req, res) {
-        console.log('/ 패스 요청됨.');
+        console.log('/ get 호출됨.');
         if(req.user)
             res.render('index', {login_success:true, loginmessage: req.flash('loginMessage')});
         else
@@ -28,7 +28,7 @@ module.exports = function(router) {
     });
 
     router.get('/admin_register', check_auth, function(req, res){
-        console.log('/admin_register 호출됨.');
+        console.log('/admin_register get 호출됨.');
         var database = req.app.get('database');
         database.AdminModel_sj.find({}, function(err, result){
             if(err) throw err;
@@ -37,12 +37,12 @@ module.exports = function(router) {
     });
 
     router.get('/admin_pwreset', check_auth, function(req, res){
-        console.log('/admin_pwreset 호출됨.');
+        console.log('/admin_pwreset get 호출됨.');
         res.render('admin_pwreset', {resetPW: null});
     });
 
     router.get('/admin_notice', check_auth, function(req, res){
-        console.log('/admin_notice 호출됨.');
+        console.log('/admin_notice get 호출됨.');
         var database = req.app.get('database');
         database.NoticeModel_sj.find({}, function(err, result){
             if(err) throw err;
@@ -51,19 +51,18 @@ module.exports = function(router) {
     });
 
     router.get('/admin_notice_edit', check_auth, function(req, res){
-        console.log('/admin_notice_edit 호출됨.');
+        console.log('/admin_notice_edit get 호출됨.');
         var database = req.app.get('database');
         database.NoticeModel_sj.findOne({
             'notice_id': req.query.notice_id
         }, function(err, result){
             if(err) throw err;
-            console.log(result);
             res.render('admin_notice_edit', {notice: result});
         });
     });
 
     router.get('/admin_banner', check_auth, function(req, res){
-        console.log('admin_banner 호출됨.');
+        console.log('admin_banner get 호출됨.');
         var database = req.app.get('database');
         database.BannerModel_sj.find({}, function(err, result){
             if(err) throw err;
@@ -72,24 +71,23 @@ module.exports = function(router) {
     });
 
     router.get('/admin_banner_add', check_auth, function(req, res){
-        console.log('admin_banner_add 호출됨.');
+        console.log('admin_banner_add get 호출됨.');
         res.render('admin_banner_add');
     });
 
     router.get('/admin_banner_edit', check_auth, function(req, res){
-        console.log('/admin_banner_edit 호출됨.');
+        console.log('/admin_banner_edit get 호출됨.');
         var database = req.app.get('database');
         database.BannerModel_sj.findOne({
             'banner_id': req.query.banner_id
         }, function(err, result){
             if(err) throw err;
-            console.log(result);
             res.render('admin_banner_edit', {banner: result});
         });
     });
 
     router.get('/admin_ban', check_auth, function(req, res){
-        console.log('admin_ban 호출됨.');
+        console.log('admin_ban get 호출됨.');
         var database = req.app.get('database');
         database.ThreadBanModel_sj.find({}).select({
             'thread_ban_id':1,
@@ -110,7 +108,7 @@ module.exports = function(router) {
     });
 
     router.get('/admin_banlist', check_auth, function(req, res){
-        console.log('admin_banlist 호출됨');
+        console.log('admin_banlist get 호출됨');
         var database = req.app.get('database');
         database.BanModel_sj.find({}, function(err, result){
             if(err) throw err;
@@ -119,24 +117,23 @@ module.exports = function(router) {
     });
 
     router.get('/admin_ban_edit', check_auth, function(req, res){
-        console.log('/admin_ban_edit 호출됨.');
+        console.log('/admin_ban_edit get 호출됨.');
         var database = req.app.get('database');
         database.BanModel_sj.findOne({
             'ban_id': req.query.ban_id
         }, function(err, result){
             if(err) throw err;
-            console.log(result);
             res.render('admin_ban_edit', {ban: result});
         });
     });
 
     router.get('/admin_chatview', check_auth, function(req, res){
-        console.log('/admin_chatview 호출됨.');
+        console.log('/admin_chatview get 호출됨.');
         res.render('admin_chatview', {chatdata:null});
     });
 
     router.get('/admin_ban_reset', check_auth, function(req, res) {
-        console.log('admin_user_ban_delete 호출됨');
+        console.log('admin_user_ban_delete get 호출됨');
         var database = req.app.get('database');
         database.UserBanModel_sj.find({
             'user_ban_id': req.query.user_ban_id
@@ -161,7 +158,7 @@ module.exports = function(router) {
     });
 
     router.get('/admin_get_ban', function(req, res){
-        console.log('/admin_get_ban 호출됨.');
+        console.log('/admin_get_ban get 호출됨.');
         var database = req.app.get('database');
         database.UserBanModel_sj.findOne({
             'ban_email': req.query.ban_email
@@ -173,7 +170,7 @@ module.exports = function(router) {
     });
 
     router.get('/admin_get_banner', check_login, function(req, res){
-        console.log('/admin_get_banner 호출됨.');
+        console.log('/admin_get_banner get 호출됨.');
         var database = req.app.get('database');
         database.BannerModel_sj.find({}).select({
             'banner_id': 1,
@@ -188,7 +185,7 @@ module.exports = function(router) {
     });
 
     router.get('/admin_get_notice', check_login, function(req, res){
-        console.log('/admin_get_notice 호출됨.');
+        console.log('/admin_get_notice get 호출됨.');
         var database = req.app.get('database');
         database.NoticeModel_sj.find({}).select({
             'noticd_id': 1,
@@ -203,7 +200,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_ban_thread_info', check_auth, function(req, res){
-        console.log('/admin_ban_thread 호출됨.', req.body);
+        console.log('/admin_ban_thread post 호출됨.');
         var database = req.app.get("database");
         database.ThreadBanModel_sj.findOne({
             'thread_id': req.body.thread_id
@@ -214,7 +211,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_register', check_auth, function(req, res){
-        console.log('/admin_register Post 호출됨.', req.body);
+        console.log('/admin_register Post post 호출됨.');
         var paramEmail = req.body.email;
         var paramNickname = req.body.nickname;
         var database = req.app.get('database');
@@ -276,7 +273,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_delete', check_auth, function(req, res){
-        console.log('admin_delete 호출 됨', req.body);
+        console.log('admin_delete post 호출됨');
         var paramId = req.body.admin_id;
         var database = req.app.get('database');
         database.AdminModel_sj.findOne({
@@ -301,7 +298,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_pwreset', check_auth, function(req, res){
-        console.log('admin_pwreset 호출됨', req.body);
+        console.log('admin_pwreset post 호출됨');
         var database = req.app.get('database');
         var randomPW = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
         database.UserModel_sj.findOne({
@@ -333,7 +330,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_notice_add', check_auth, function(req, res) {
-        console.log('admin_notice_add 호출됨', req.body);
+        console.log('admin_notice_add post 호출됨');
         var database = req.app.get('database');
         var paramHead = req.body.notice_head;
         var paramBody = req.body.notice_body;
@@ -356,7 +353,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_notice_delete', check_auth, function(req, res) {
-        console.log('admin_notice_delete 호출됨', req.body);
+        console.log('admin_notice_delete post 호출됨');
         var database = req.app.get('database');
         database.NoticeModel_sj.find({
             'notice_id': req.body.notice_id
@@ -369,7 +366,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_notice_edit', check_auth, function(req, res) {
-        console.log('admin_notice_edit 호출됨', req.body);
+        console.log('admin_notice_edit post 호출됨');
         var database = req.app.get('database');
         var paramHead = req.body.notice_head;
         var paramBody = req.body.notice_body;
@@ -396,7 +393,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_banner_add', check_auth, function(req, res) {
-        console.log('admin_banner_add 호출됨', req.body);
+        console.log('admin_banner_add post 호출됨');
         var database = req.app.get('database');
         convertImage(req.body.banner_img, function(err, paramImage){
             database.AdminModel_sj.findOne({
@@ -420,7 +417,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_banner_delete', check_auth, function(req, res) {
-        console.log('admin_banner_delete 호출됨', req.body);
+        console.log('admin_banner_delete post 호출됨');
         var database = req.app.get('database');
         database.BannerModel_sj.find({
             'banner_id': req.body.banner_id
@@ -433,7 +430,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_banner_edit', check_auth, function(req, res) {
-        console.log('admin_banner_edit 호출됨', req.body);
+        console.log('admin_banner_edit post 호출됨');
         var database = req.app.get('database');
         database.AdminModel_sj.findOne({
             'email':req.user.email
@@ -461,7 +458,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_ban_add', check_auth, function(req, res) {
-        console.log('admin_ban_add 호출됨', req.body);
+        console.log('admin_ban_add post 호출됨');
         var database = req.app.get('database');
         async.waterfall([
             function(done){
@@ -501,7 +498,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_ban_edit', check_auth, function(req, res) {
-        console.log('admin_ban_edit 호출됨', req.body);
+        console.log('admin_ban_edit post 호출됨');
         var database = req.app.get('database');
         var date = new Date();
         var paramDays = req.body.ban_days!="영구" ? req.body.ban_days : 36500;
@@ -553,7 +550,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_getchat', check_auth, function(req, res) {
-        console.log('admin_getchat 호출됨', req.body);
+        console.log('admin_getchat post 호출됨');
         var database = req.app.get('database');
         database.MessageModel_sj.find({
             'super_thread_id': req.body.thread_id
@@ -564,7 +561,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_user_ban', check_auth, function(req, res) {
-        console.log('admin_getchat 호출됨', req.body);
+        console.log('admin_getchat post 호출됨');
         var database = req.app.get('database');
         var date = new Date();
         var paramDays = req.body.ban_days!="영구" ? req.body.ban_days : 36500;
@@ -584,7 +581,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_user_ban_delete', check_auth, function(req, res) {
-        console.log('admin_user_ban_delete 호출됨', req.body);
+        console.log('admin_user_ban_delete post 호출됨');
         var database = req.app.get('database');
         database.UserBanModel_sj.find({
             'user_ban_id': req.body.user_ban_id
@@ -597,7 +594,7 @@ module.exports = function(router) {
     });
 
     router.post('/admin_thread_ban', check_auth, function(req, res) {
-        console.log('admin_thread_ban 호출됨', req.body);
+        console.log('admin_thread_ban post 호출됨');
         var database = req.app.get('database');
 
         database.ThreadModel_sj.findOne({

@@ -9,7 +9,7 @@ module.exports = new LocalStrategy({
 	var paramName = req.body.name;
 	var paramStuid = req.body.stuid;
 
-	console.log('passport의 local-signup 호출됨 : ' + email + ', ' + password + ', ' + paramName);
+	console.log('passport의 local-signup 호출됨 ');
 
 	// findOne 메소드가 blocking되지 않도록 하고 싶은 경우, async 방식으로 변경
 	process.nextTick(function() {
