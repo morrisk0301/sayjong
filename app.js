@@ -42,6 +42,7 @@ app.use(expressSession({
 
 app.use(passport.initialize());
 app.use(passport.session());
+//app.use(passport.authenticate('passport-one-session-per-user'));
 app.use(flash());
 
 app.use(cors());
