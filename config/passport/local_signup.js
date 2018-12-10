@@ -57,8 +57,11 @@ module.exports = new LocalStrategy({
                                 }
                             })
                         } else {
-                            var error = '2-8';
-                            return done(error);
+                            nev.resendVerificationEmail(email, function(err, userFound){
+                                if(err) throw err;
+                                if(userFound) return done("2-0");
+                                else return done("2-9");
+                            })
                         }
                     });
                 })
