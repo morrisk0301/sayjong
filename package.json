@@ -39,7 +39,7 @@
     "rand-token": "^0.4.0",
     "serve-static": "^1.11.2",
     "set-tz": "^0.1.0",
-    "sharp": "^0.21.0",
+    "sharp": "^0.30.5",
     "socket.io": "^2.1.1"
   }
 }
