@@ -40,6 +40,6 @@
     "serve-static": "^1.11.2",
     "set-tz": "^0.1.0",
     "sharp": "^0.21.0",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.5.0"
   }
 }
